@@ -1,0 +1,309 @@
+Aim : Study of open source relational database management
+system:MySQL
+
+ Create database or use existing database
+mysql> use student153;
+Database changed
+mysql> show tables;
+Empty set (0.05 sec)
+ show structure of database
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| eno | int(11) | YES | | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| eaddress | varchar(25) | YES | | NULL | |
+ | esal | decimal(6,2) | YES | | NULL | |
+| deptno | int(11) | YES | | NULL | |
++----------+--------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+2
+ Insert value in employee table
+mysql> insert into emp values(101,'Sachin','Mumbai',5647.23,2);
+Query OK, 1 row affected (0.06 sec)
+mysql> insert into emp values(102,'Vinod','Banglore',3457.23,5);
+Query OK, 1 row affected (0.09 sec)
+mysql> insert into emp values(104,'John','Pune',7623.65,3);
+Query OK, 1 row affected (0.09 sec)
+mysql> insert into emp values(103,'Julie','Nashik',5323.65,2);
+Query OK, 1 row affected (0.08 sec)
+mysql> insert into emp values(106,'Apurva','Indore',6723.64,4);
+Query OK, 1 row affected (0.06 sec)
+ show table of employee record
+mysql> select * from emp;
++------+--------+----------+---------+--------+
+| eno | ename | eaddress | esal | deptno |
++------+--------+----------+---------+--------+
+3
+| 101 | Sachin | Mumbai | 5647.23 | 2 |
+| 102 | Vinod | Banglore | 3457.23 | 5 |
+| 104 | John | Pune| 7623.65 | 3 |
+| 103 | Julie | Nashik | 5323.65 | 2 || 106 | Apurva | Indore | 6723.64 | 4 |
++------+--------+----------+---------+--------+
+5 rows in set (0.00 sec)
+DDL COMMANDS
+1) Alter table: add
+used to add new column name in table
+mysql> alter table emp add dname 
+int; Query OK, 5 rows affected (0.45 
+sec) Records: 5 Duplicates: 0 
+Warnings: 0
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| eno | int(11) | YES | | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| eaddress | varchar(25) | YES | | NULL | |
+| esal | decimal(6,2) | YES | | NULL | |
+| deptno i nt(11) |
+Y
+E
+S
+|
+| NULL | |
+4
+| dname | int(11) |
+Y
+E
+S
+|
+| NULL | |
+5
+1)Alter table: modify
+used to modify size of column
+mysql> alter table emp modify esal decimal(7,2);
+Query OK, 5 rows affected (0.60 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| eno | int(11) | YES | | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| eaddress | varchar(25) | YES | | NULL | |
+| esal | decimal(7,2) | YES | | NULL | |
+| deptno | int(11) | YES | | NULL | |
+| dname | int(11) | YES | | NULL | |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.11 sec)
+before salary column size is(6,2)
+after modify it is (7,2)
+2)Alter table:drop
+used to delete the column in table
+6
+mysql> alter table emp drop dname;
+Query OK, 5 rows affected (0.69 sec)
+Records: 5 Duplicates: 0 Warnings: 0
+mysql> desc emp;
++----------+--------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| eno | int(11) | YES | | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| eaddress | varchar(25) | YES | | NULL | |
+| esal | decimal(7,2) | YES | | NULL | |
+| deptno | int(11) | YES | | NULL | |
++----------+--------------+------+-----+---------+-------+
+5 rows in set (0.08 sec)
+after drop command dname column deleted.
+4)truncate
+used to delete all the rows/record from table
+mysql> select * from emp1;
++------+--------+--------+
+| eno | ename | deptno |
++------+--------+--------+
+| 102 | john | 23 |
+| 104 | vinod | 2 |
+| 103 | sachin | 5 |
+| 106 | vijay | 15 |
++------+--------+--------+
+7
+4 rows in set (0.00 sec)
+mysql> truncate table emp1;
+Query OK, 0 rows affected (0.08 sec)
+mysql> select * from emp1;
+Empty set (0.00 sec)
+mysql> desc emp1;
++--------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| eno | int(11) | YES | | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| deptno | int(11) | YES | | NULL | |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.05 sec)
+Here all records are get deleted but structure remains same
+5)drop command
+used to delete all records as well as structure
+mysql> drop table emp1;
+Query OK, 0 rows affected (0.37 sec)
+mysql> select * from emp1;
+7
+ERROR 1146 (42S02): Table 'student153.emp1' doesn't exist
+mysql> desc emp1;
+ERROR 1146 (42S02): Table 'student153.emp1' doesn't exist
+mysql>
+ View
+mysql> select * from emp;
++------+--------+----------+---------+--------+
+| eno | ename | eaddress | esal | deptno |
++------+--------+----------+---------+--------+
+| 101 | Sachin | Mumbai | 5647.23 | 2 |
+| 102 | Vinod | Banglore | 3457.23 | 5 |
+| 104 | John | Pune | 7623.65 | 3 |
+| 103 | Julie | Nashik | 5323.65 | 2 |
+| 106 | Apurva | Indore | 6723.64 | 4 |
++------+--------+----------+---------+--------+
+5 rows in set (0.12 sec)
+mysql> create view emp_view as select eno,ename,esal from emp;
+Query OK, 0 rows affected (0.09 sec)
+mysql> select * from emp_view;
++------+--------+---------+
+| eno | ename | esal |
++------+--------+---------+
+| 101 | Sachin | 5647.23 |
+| 102 | Vinod | 3457.23 |
+8
+| 104 | John | 7623.65 |
+| 103 | Julie | 5323.65 |
+| 106 | Apurva | 6723.64 |
++------+--------+---------+
+5 rows in set (0.03 sec)
+Here view is created for eno,ename,esal
+1.update in view
+when we update virtual table then it will also update in original table
+mysql> update emp_view set ename='ramesh' where eno=101;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+mysql> select * from emp_view;
++------+--------+---------+
+| eno | ename | esal |
++------+--------+---------+
+| 101 | ramesh | 5647.23 |
+| 102 | Vinod | 3457.23 |
+| 104 | John | 7623.65 |
+| 103 | Julie | 5323.65 |
+| 106 | Apurva | 6723.64 |
++------+--------+---------+
+5 rows in set (0.00 sec)
+9
+mysql> select * from emp;
++------+--------+----------+---------+--------+
+| eno | ename | eaddress | esal | deptno |
++------+--------+----------+---------+--------+
+| 101 | ramesh | Mumbai | 5647.23 | 2 |
+| 102 | Vinod | Banglore | 3457.23 | 5 |
+| 104 | John | Pune | 7623.65 | 3 |
+| 103 | Julie | Nashik | 5323.65 | 2 |
+| 106 | Apurva | Indore | 6723.64 | 4 |
++------+--------+----------+---------+--------+
+5 rows in set (0.00 sec)
+2.Delete from view
+mysql> delete from emp_view where eno=101;
+Query OK, 1 row affected (0.40 sec)
+mysql> select * from emp_view;
++------+--------+---------+
+| eno | ename | esal |
++------+--------+---------+
+| 102 | Vinod | 3457.23 |
+| 104 | John | 7623.65 |
+| 103 | Julie | 5323.65 |
+| 106 | Apurva | 6723.64 |
++------+--------+---------+
+4 rows in set (0.00 sec)
+10
+mysql> select * from emp;
++------+--------+----------+---------+--------+
+| eno | ename | eaddress | esal | deptno |
++------+--------+----------+---------+--------+
+| 102 | Vinod | Banglore | 3457.23 | 5 |
+| 104 | John | Pune | 7623.65 | 3 |
+| 103 | Julie | Nashik | 5323.65 | 2 |
+| 106 | Apurva | Indore | 6723.64 | 4 |
++------+--------+----------+---------+--------+
+4 rows in set (0.00 sec)
+1.Insert in view
+mysql> insert into emp_view values(107,'ajay',5643.77);
+Query OK, 1 row affected (0.06 sec)
+mysql> select * from emp_view;
++------+--------+---------+
+| eno | ename | esal |
++------+--------+---------+
+| 102 | Vinod | 3457.23 |
+| 104 | John | 7623.65 |
+| 103 | Julie | 5323.65 |
+| 106 | Apurva | 6723.64 |
+| 107 | ajay | 5643.77 |
++------+--------+---------+
+11
+4 rows in set (0.00 sec)
+mysql> select * from emp;
++------+--------+----------+---------+--------+
+| eno | ename | eaddress | esal | deptno |
++------+--------+----------+---------+--------+
+| 102 | Vinod | Banglore | 3457.23 | 5 |
+| 104 | John | Pune | 7623.65 | 3 |
+| 103 | Julie | Nashik | 5323.65 | 2 |
+| 106 | Apurva | Indore | 6723.64 | 4 |
+| 107 | ajay | NULL | 5643.77 | NULL |
++------+--------+----------+---------+--------+
+5 rows in set (0.00 sec)
+1.update in view
+mysql> update emp_view set ename='abc' where eno=102;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+mysql> select * from emp_view;
++------+--------+---------+
+| eno | ename | esal |
+12
++------+--------+---------+
+| 102 | abc | 3457.23 |
+| 104 | John | 7623.65 |
+| 103 | Julie | 5323.65 |
+| 106 | Apurva | 6723.64 |
+| 107 | ajay | 5643.77 |
++------+--------+---------+
+5 rows in set (0.00 sec)
+6.drop view
+mysql> drop view emp_view;
+Query OK, 0 rows affected (0.00 sec)
+mysql> select * from emp_view;
+ERROR 1146 (42S02): Table 'student142.emp_view' doesn't exist
+ INDEX
+1.Create index
+mysql> create unique index emp_index on emp(eno);
+Query OK, 0 rows affected (0.27 sec)
+Records: 0 Duplicates: 0 Warnings: 0
+mysql> show index from emp;
+13
++-------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+-------------
+--+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null |
+Index_type | Comment | Index_comment |
++-------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+-------------
+--+
+| emp | 0 | emp_index | 1 | eno | A | 5 | NULL | NULL | YES | BTREE | | |
+| emp | 1 | eid | 1 | eno | A | 5 | NULL | NULL | YES | BTREE | | |
+| emp | 1 | eno | 1 | eno | A | 5 | NULL | NULL | YES | BTREE | | |
++-------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+-------------
+--+
+3 rows in set (0.05 sec)
+2.Drop index
+mysql> drop index emp_index on emp;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0 Duplicates: 0 Warnings: 0
+mysql> show index from emp;
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+--------------
+-+
+| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null |
+Index_type | Comment | Index_comment |
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+--------------
+-+
+| emp | 1 | eid | 1 | eno | A | 5 | NULL | NULL | YES | BTREE | | |
+| emp | 1 | eno | 1 | eno | A | 5 | NULL | NULL | YES | BTREE | | |
+14
++-------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+--------------
+-+
+2 rows in set (0.00 sec)
