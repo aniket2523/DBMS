@@ -1,0 +1,273 @@
+Aim: Design at least 10 SQL queries for suitab1le database application using
+SQL DML statements: Insert, Select, Update, Delete with operators,
+functions, and set operator, all types of Join, Sub-Query and View.
+
+ Create table employe1e
+mysql> create table employee(eno int primary key,ename varchar(25),job varchar(25),hiredate
+date,dept int,salary decimal(6,2));
+Query OK, 0 rows affected (0.17 sec)
+mysql> desc employee;
++----------+--------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| eno | int(11) | NO | PRI | NULL | |
+| ename | varchar(25) | YES | | NULL | |
+| job | varchar(25) | YES | | NULL | |
+| hiredate | date | YES | | NULL | |
+| dept | int(11) | YES | | NULL | |
+| salary | decimal(6,2) | YES | | NULL | |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.03 sec)
+ INSERT into table
+mysql> insert into employee values(101,'Vijay','manager','2001-04-24',20,2345.43);
+Query OK, 1 row affected (0.05 sec)
+mysql> insert into employee values(212,'rahul','clerk','2004-02-22',10,1225.33);
+Query OK, 1 row affected (0.11 sec)
+mysql> insert into employee values(103,'mansi','salesman','2009-12-03',12,4321.32);
+Query OK, 1 row affected (0.06 sec)
+mysql> insert into employee values(105,'sachin','accountant','2004-05-23',09,2221.32);
+Query OK, 1 row affected (0.08 sec)
+mysql> insert into employee values(107,'apurva','salesman','2005-09-12',03,3456.75);
+Query OK, 1 row affected (0.06 sec)
+mysql> select * from employee;
++-----+--------+------------+------------+------+---------+
+| eno | ename | job | hiredate | dept | salary |
++-----+--------+------------+------------+------+---------+
+| 101 | Vijay | manager | 2001-04-24 | 20 | 2345.43 |
+| 103 | mansi | salesman | 2009-12-03 | 12 | 4321.32 |
+| 105 | sachin | accountant | 2004-05-23 | 9 | 2221.32 |
+| 107 | apurva | salesman | 2005-09-12 | 3 | 3456.75 |
+| 212 | rahul | clerk | 2004-02-22 | 10 | 1225.33 |
++-----+--------+------------+------------+------+---------+
+5 rows in set (0.00 sec)
+SELECT command
+Used to select a particular column
+mysql> select ename,job from employee where eno=107;
++--------+----------+
+| ename | job |
++--------+----------+
+| apurva | salesman |
++--------+----------+
+1 row in set (0.03 sec)
+ UPDATE command
+Update record job=accountant where name is mansi
+mysql> update employee set job='Accountant' where ename='mansi';
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1 Changed: 1 Warnings: 0
+mysql> select * from employee;
++-----+--------+------------+------------+------+---------+
+| eno | ename | job | hiredate | dept | salary |
++-----+--------+------------+------------+------+---------+
+| 101 | Vijay | manager | 2001-04-24 | 20 | 2345.43 |
+| 103 | mansi | Accountant | 2009-12-03 | 12 | 4321.32 |
+| 105 | sachin | accountant | 2004-05-23 | 9 | 2221.32 |
+| 107 | apurva | salesman | 2005-09-12 | 3 | 3456.75 |
+| 212 | rahul | clerk | 2004-02-22 | 10 | 1225.33 |
+5 rows in set (0.00 sec)
+DELETE from employee Delete record where eno=103
+mysql> delete from employee where eno=103;
+Query OK, 1 row affected (0.08 sec)
+mysql> select * from employee;
++-----+--------+------------+------------+------+---------+
+| eno | ename | job | hiredate | dept | salary |
++-----+--------+------------+------------+------+---------+
+| 101 | Vijay | manager | 2001-04-24 | 20 | 2345.43 |
+| 105 | sachin | accountant | 2004-05-23 | 9 | 2221.32 |
+| 107 | apurva | salesman | 2005-09-12 | 3 | 3456.75 |
+| 212 | rahul | clerk | 2004-02-22 | 10 | 1225.33 |
++-----+--------+------------+------------+------+---------+
+4 rows in set (0.00 sec)
+ SET OPERATORS
+CREATE two tables
+1.Graduates
+2.Managers
+mysql> create table graduates(gno int,name varchar(20),age int);
+Query OK, 0 rows affected (0.11 sec)
+mysql> insert into graduates values(123,'sachin',37);
+Query OK, 1 row affected (0.11 sec)
+mysql> insert into graduates values(101,'saket',39);
+Query OK, 1 row affected (0.08 sec)
+mysql> insert into graduates values(105,'rahul',35);
+Query OK, 1 row affected (0.08 sec)
+mysql> create table managers(mno int,name varchar(20),age int);
+Query OK, 0 rows affected (0.23 sec)
+mysql> insert into managers values(125,'Yuvraj',40);
+Query OK, 1 row affected (0.06 sec)
+mysql> insert into managers values(109,'vijay',39);
+Query OK, 1 row affected (0.08 sec)
+mysql> insert into managers values(113,'Rahul',35);
+Query OK, 1 row affected (0.08 sec)
+mysql> select * from graduates;
++------+--------+------+
+| gno | name | age |
+| 123 | sachin | 37 |
+| 101 | saket | 39 |
+| 105 | rahul | 35 |
++------+--------+------+
+3 rows in set (0.00 sec)
+mysql> select * from managers;
++------+--------+------+
+| mno | name | age |
++------+--------+------+
+| 125 | Yuvraj | 40 |
+| 109 | vijay | 39 |
+| 113 | Rahul | 35 |
++------+--------+------+
+3 rows in set (0.00 sec)
+ UNION operator
+Gives all values including duplicates
+mysql> select name from graduates UNION select name from managers;
++--------+
+| name |
++--------+
+| sachin |
+| saket |
+| rahul |
+| Yuvraj |
+| vijay |
++--------+
+5 rows in set (0.05 sec)
+ UNION ALL operator
+Gives all values including duplicates
+mysql> select name from graduates UNION ALL select name from managers;
++--------+
+| name |
++--------+
+| sachin |
+| saket |
+| rahul |
+| Yuvraj |
+| vijay |
+| Rahul |
++--------+
+6 rows in set (0.00 sec)
+ LIKE operator
+mysql> select name from graduates where name like' ';
++-------+
+| name |
++-------+
+| saket |
+| rahul |
++-------+
+2 rows in set (0.06 sec)
+ NOT LIKE operator
+mysql> select name from graduates where name not like's%';
++-------+
+| name |
++-------+
+| rahul |
++-------+
+1 row in set (0.00 sec)
+ NOT BETWEEN operator
+mysql> select * from managers where mno not between 102 and 110;
++------+--------+------+
+| mno | name | age |
++------+--------+------+
+| 125 | Yuvraj | 40 |
+| 113 | Rahul | 35 |
++------+--------+------+
+2 rows in set (0.05 sec)
+ BETWEEN operator
+mysql> select * from managers where mno between 102 and 110;
++------+-------+------+
+| mno | name | age |
++------+-------+------+
+| 109 | vijay | 39 |
++------+-------+------+
+1 row in set (0.00 sec)
+ JOINS
+mysql> create table student(rno int,name varchar(15),address varchar(20),age int);
+Query OK, 0 rows affected (0.14 sec)
+mysql> insert into student values(1,'harsh','delhi',38);
+Query OK, 1 row affected (0.05 sec)
+mysql> insert into student values(2,'pratik','bihar',18);
+Query OK, 1 row affected (0.10 sec)
+mysql> insert into student values(3,'priyanka','kolkata',20);
+Query OK, 1 row affected (0.08 sec)
+mysql> insert into student values(4,'rohit','alipur',25);
+Query OK, 1 row affected (0.05 sec)
+mysql> insert into student values(5,'dhanraj','ramnagar',22);
+Query OK, 1 row affected (0.05 sec)
+mysql> create table studentcourse(courseid int,rno int);
+Query OK, 0 rows affected (0.09 sec)
+mysql> insert into studentcourse values(1,1);
+Query OK, 1 row affected (0.05 sec)
+mysql> insert into studentcourse values(2,2);
+Query OK, 1 row affected (0.02 sec)
+mysql> insert into studentcourse values(3,3);
+Query OK, 1 row affected (0.05 sec)
+mysql> insert into studentcourse values(4,4);
+Query OK, 1 row affected (0.11 sec)
+mysql> insert into studentcourse values(5,5);
+Query OK, 1 row affected (0.06 sec)
+mysql> select * from student;
++------+----------+----------+------+
+| rno | name | address | age |
++------+----------+----------+------+
+| 1 | harsh | delhi | 38 |
+| 2 | pratik | bihar | 18 |
+| 3 | priyanka | kolkata | 20 |
+| 4 | rohit | alipur | 25 |
+| 5 | dhanraj | ramnagar | 22 |
++------+----------+----------+------+
+5 rows in set (0.00 sec)
+mysql> select * from studentcourse;
++----------+------+
+| courseid | rno |
++----------+------+
+|
+|
+1 |
+2 |
+1 |
+2 |
+| 3 | 3 |
+|
+|
+4 |
+5 |
+4 |
+5 |
++----------+------+
+5 rows in set (0.00 sec)
+ INNER JOIN
+mysql> select studentcourse.courseid,
+student.name,student.age from student 
+INNER JOIN studentcourse 
+ON student.rno=studentcourse.rno;
++----------+----------+------+
+| courseid | name | age |
++----------+----------+------+
+| 1 | harsh | 38 |
+| 2 | pratik | 18 |
+| 3 | priyanka | 20 |
+| 4 | rohit | 25 |
+| 5 | dhanraj | 22 |
++----------+----------+------+
+5 rows in set (0.00 sec)
+ LEFT JOIN
+mysql> select student.name,studentcourse.courseid from student LEFT JOIN studentcourse
+ON studentcourse.rno=student.rno;
++----------+----------+
+| name | courseid |
++----------+----------+
+| harsh | 1 |
+| pratik | 2 |
+| priyanka | 3 |
+| rohit | 4 |
+| dhanraj | 5 |
++----------+----------+
+5 rows in set (0.00 sec)
+ RIGHT JOIN
+mysql> select student.name,studentcourse.courseid from student RIGHT JOIN studentcourse
+ON studentcourse.rno=student.rno;
++----------+----------+
+| name | courseid |
++----------+----------+
+| harsh | 1 |
+| pratik | 2 |
+| priyanka | 3 |
+| rohit | 4 |
+| dhanraj | 5 |
++----------+----------+
+5 rows in set (0.00 sec)
