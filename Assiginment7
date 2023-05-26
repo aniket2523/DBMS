@@ -1,0 +1,116 @@
+ Assignment No:07
+problem statement: Study of Open Source NOSQL Database : MongoDB
+(Installation, Basic CRUD operations, Execution)
+Installation:
+If mongoDB already install on terminal then is will show following information.
+(base) student@student-Veriton-M200-H61:~$ mongo
+MongoDB shell version v3.6.8
+connecting to: mongodb://127.0.0.1:27017
+Implicit session: session { "id" : UUID("2d91bb1b-e620-40b2-92a6-2b89e2402da0") }
+MongoDB server version: 3.6.8
+Server has startup warnings: 
+2023-04-27T09:54:01.507+0530 I STORAGE [initandlisten] 
+2023-04-27T09:54:01.507+0530 I STORAGE [initandlisten] ** WARNING: Using the XFS
+filesystem is strongly recommended with the WiredTiger storage engine
+2023-04-27T09:54:01.507+0530 I STORAGE [initandlisten] ** See
+http://dochub.mongodb.org/core/prodnotes-filesystem
+2023-04-27T09:54:19.430+0530 I CONTROL [initandlisten] 
+2023-04-27T09:54:19.430+0530 I CONTROL [initandlisten] ** WARNING: Access control is not
+enabled for the database.
+2023-04-27T09:54:19.430+0530 I CONTROL [initandlisten] ** Read and write access to
+data and configuration is unrestricted.
+2023-04-27T09:54:19.430+0530 I CONTROL [initandlisten] 
+Operations:
+1. To show databases.
+Syntax: show dbs;
+admin 0.000GB
+company 0.000GB
+config 0.000GB
+dbRucha 0.000GB
+inventory 0.000GB
+local 0.000GB
+nisha 0.000GB
+pranav 0.000GB
+resturant 0.000GB
+2.creating database in mongoDB.
+Syntax: use roll153;
+switched to db roll153
+3. show collections.
+Syntax:show collections;
+emp
+4.creating collection.
+Syntax:
+db.emp.insert({eno:223,ename:"aaa",desgn:"manager"},{_id:2,eno:333,skillset:["c","c+
++","java"]});
+WriteResult({ "nInserted" : 1 })
+5.Show collections.
+Syntax: 
+db.emp.find();
+{ "_id" : ObjectId("644a03ef7f2a9911c38d9768"), "eno" : 111, "ename" : "abc", "esal" :
+234.45 }
+Show collection in well organized format
+db.emp.find().pretty();
+{
+"_id" : ObjectId("644a03ef7f2a9911c38d9768"),
+"eno" : 111,
+"ename" : "abc",
+"esal" : 234.45
+}
+6.Inserting records into collection emp.
+db.emp.insert({eno:222,ename:"cde",desgn:"manager",esal:223.67});
+WriteResult({ "nInserted" : 1 })
+> db.emp.insert({eno:222,ename:"cde",desgn:"manager",esal:223.67});
+WriteResult({ "nInserted" : 1 })
+> db.emp.find();
+{ "_id" : ObjectId("644a03ef7f2a9911c38d9768"), "eno" : 111, "ename" : "abc", "esal" :
+234.45 }
+{ "_id" : ObjectId("644a04927f2a9911c38d9769"), "eno" : 222, "ename" : "cde", "desgn" :
+"manager", "esal" : 223.67 }
+{ "_id" : ObjectId("644a049f7f2a9911c38d976a"), "eno" : 222, "ename" : "cde", "desgn" :
+"manager", "esal" : 223.67 }
+> db.emp.find().pretty();
+{
+"_id" : ObjectId("644a03ef7f2a9911c38d9768"),
+"eno" : 111,
+"ename" : "abc",
+"esal" : 234.45
+}
+{
+"_id" : ObjectId("644a04927f2a9911c38d9769"),
+"eno" : 222,
+"ename" : "cde",
+"desgn" : "manager",
+"esal" : 223.67
+}
+{
+"_id" : ObjectId("644a049f7f2a9911c38d976a"),
+"eno" : 222,
+"ename" : "cde",
+"desgn" : "manager",
+"esal" : 223.67
+}
+db.emp.insert({eno:223,ename:"aaa",desgn:"manager"},{_id:2,eno:333,skillset:["c","c+
++","java"]});
+WriteResult({ "nInserted" : 1 })
+7.show records including ename,esal.
+> db.emp.find({eno:111},{ename:1,esal:1});
+{ "_id" : ObjectId("644a03ef7f2a9911c38d9768"), "ename" : "abc", "esal" : 234.45 }
+ db.emp.find().pretty();
+{
+"_id" : ObjectId("644a03ef7f2a9911c38d9768"),
+"eno" : 111,
+"ename" : "abc",
+"esal" : 234.45
+}
+8.Show records excluding designation
+{ "_id" : ObjectId("644a06117f2a9911c38d976b"), "eno" : 223, "ename" : "aaa", "desgn" :
+"manager" }
+> db.emp.find({eno:223},{desgn:0}).pretty();
+{
+"_id" : ObjectId("644a06117f2a9911c38d976b"),
+"eno" : 223,
+"ename" : "aaa"
+}
+9. Remove records
+db.emp.remove({eno:223});
+ WriteResult({ "nRemoved" : 1 }
