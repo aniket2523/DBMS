@@ -1,0 +1,119 @@
+Problem statement: 
+Unnamed PL/SQL code block: Use of Control structure and Exception handling is
+mandatory. Write a PL/SQL block of code for the following requirements:-
+Schema:
+1. Borrower(Rollin, Name, DateofIssue, Dateofreturn)
+2. Fine(Roll_no,name,status,fine)
+●
+Accept roll_no & name of book from user.
+●
+Check the number of days (from date of issue), if days are between 15 to 30 then
+fine amount will be Rs 5 per day.
+●
+If no. of days>30, per day fine will be Rs 50 per day & for days less than 30, Rs.
+5 per day.
+●
+After submitting the book, status will change from I to R.
+●
+If condition of fine is true, then details will be stored into fine table.
+Frame the problem statement for writing PL/SQL block inline with above
+statement.
+Output:
+
+ mysql> use proc1_153;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_proc1_153 |
++---------------------+
+| borrower |
+| fine |
++---------------------+
+2 rows in set (0.01 sec)
+mysql> desc borrower;
++-------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| rno | int | YES | | NULL | |
+| name | varchar(20) | YES | | NULL | |
+| doi | date | YES | | NULL | |
+| dor | date | YES | | NULL | |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+mysql> desc fine;
++--------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rno | int | YES | | NULL | |
+| name | varchar(20) | YES | | NULL | |
+| status | varchar(20) | YES | | NULL | |
+| fine | int | YES | | NULL | |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+file name : proc11_153.sql
+//code for trigger
+Delimiter $$
+create trigger proc1 
+before insert on borrower
+for each row
+Begin
+insert into fine(rno,name,status) values (new.rno,new.name,'I');
+end $$
+Delimiter ;
+Run trigger : 
+mysql> source /home/student/proc11_153.sql;
+Query OK, 0 rows affected (0.17 sec)
+file name: proc33_fine.sql;
+//code fro procedure
+Delimiter $$
+create procedure fine_amt(IN r int,IN n varchar(10),IN dr Date)
+begin
+declare temp date;
+declare day int;
+update borrower set dor=dr where rno=r and name=n;
+select doi into temp from borrower where rno=r and name=n;
+set day=DATEDIFF(dr,temp);
+if(day>30) then
+update fine set fine=50 where rno=r and name=n;
+update fine set status='R' where rno=r and name=n;
+elseif (day>=15 and day<=30) then
+update fine set fine=5 where rno=r and name=n;
+update fine set status='R' where rno=r and name=n;
+elseif (day<30) then
+update fine set fine=5 where rno=r and name=n;
+update fine set status='R' where rno=r and name=n;
+END IF;
+END $$
+Delimiter ;
+run procedure : 
+mysql> source /home/student/proc33_fine.sql;
+Query OK, 0 rows affected (0.20 sec)
+mysql> select *from borrower;
++------+--------+------------+------------+
+| rno | name | doi | dor |
++------+--------+------------+------------+
+| 10 | 111 | 2022-10-12 | 2022-10-16 |
+| 11 | 23 | 2022-03-12 | 2023-04-13 |
+| 12 | 24 | 2023-01-07 | 2023-02-28 |
+| 13 | 14 | 2022-02-04 | 2022-02-16 |
+| 15 | ishwri | 2022-03-05 | 2022-04-27 |
+| 16 | aditi | 2023-01-02 | 2023-01-17 |
++------+--------+------------+------------+
+6 rows in set (0.00 sec)
+calling procedure : 
+mysql> call fine_amt(16,'aditi','2023-01-17');
+Query OK, 1 row affected (0.16 sec)
+here ,when we select rno=16 then it will display amount of fine and also status of book;
+mysql> select *from fine;
++------+--------+--------+------+
+| rno | name | status | fine |
++------+--------+--------+------+
+| 3 | 112 | NULL | NULL |
+| 10 | 111 | R | 0 |
+| 11 | 23 | R | 1000 |
+| 12 | 24 | R | 1000 |
+| 13 | 14 | R | 20 |
+| 15 | ishwri | R | 1000 |
+| 16 | aditi | R | 5 |
++------+--------+--------+------+
+7 rows in set (0.00 sec
