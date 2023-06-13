@@ -1,0 +1,2714 @@
+// Assignment No.1 - Based on SLL for Employee record //
+
+#include <iostream>
+
+using namespace std;
+
+class emp
+
+{
+
+   int id;
+
+   char *name;
+
+   char *des;
+
+   long int mn;
+
+   float sal;
+
+   emp *next;
+
+   public:
+
+   emp()  // Constructor
+
+  {
+
+    name=new char;  // Memory allocation
+
+    des=new char;
+
+   }
+
+ 
+
+  void create();
+
+  void display();
+
+  void add_front();  //Insertion operation
+
+  void add_last();
+
+  void add_middle();
+
+  void del_at_f();  //Deletion operation
+
+  void del_l();
+
+  void del_m();
+
+}*start;
+
+void emp::create()
+
+{
+
+   emp *temp;
+
+   temp=new emp;
+
+   cout<<"\n enter the id=";
+
+   cin>>temp->id;
+
+   cout<<"\n enter the empolye name=";
+
+   cin>>temp->name;
+
+   cout<<"\n enter the designation=";
+
+   cin>>temp->des;
+
+   cout<<"\n enter the mobile no=";
+
+   cin>>temp->mn;
+
+   cout<<"\n enter the salary=";
+
+   cin>>temp->sal;
+
+   temp->next=NULL;
+
+   temp->next=start;
+
+   start=temp;
+
+}
+
+void emp::display()
+
+{
+
+  int count=0;
+
+  emp *temp;
+
+  temp=start;
+
+  if(temp==NULL)
+
+  {
+
+     cout<<"\n list is empty";
+
+  }
+
+  else
+
+  {
+
+    while(temp!=NULL)
+
+    {
+
+      cout<<"\n"<<temp->id;
+
+      cout<<"\t"<<temp->name;
+
+      cout<<"\t"<<temp->des;
+
+      cout<<"\t"<<temp->mn;
+
+      cout<<"\t"<<temp->sal;
+
+      temp=temp->next;
+
+      count++;
+
+    }
+
+    cout<<"\n";
+
+    cout<<"\n number of records="<<count;
+
+  }
+
+}
+
+void emp::add_front()   // Insertion at Front side
+
+{
+
+  emp *temp,*ptr;
+
+  ptr=new emp;
+
+   cout<<"\n enter the id=";
+
+   cin>>ptr->id;
+
+   cout<<"\n enter the empolye name=";
+
+   cin>>ptr->name;
+
+   cout<<"\n enter the designation=";
+
+   cin>>ptr->des;
+
+   cout<<"\n enter the mobile no=";
+
+   cin>>ptr->mn;
+
+   cout<<"\n enter the salary=";
+
+   cin>>ptr->sal;
+
+  if(temp==NULL)
+
+  {
+
+     temp=ptr;
+
+  }
+
+  else
+
+  {
+
+     temp=start;
+
+     start=ptr;
+
+     ptr->next=temp;
+
+  }
+
+}
+
+ 
+
+void emp::add_last()   // Insertion at Last
+
+{
+
+  emp *temp,*newptr;
+
+  newptr=new emp;
+
+  cout<<"\n enter the id=";
+
+   cin>>newptr->id;
+
+   cout<<"\n enter the empolye name=";
+
+   cin>>newptr->name;
+
+   cout<<"\n enter the designation=";
+
+   cin>>newptr->des;
+
+   cout<<"\n enter the mobile no=";
+
+   cin>>newptr->mn;
+
+   cout<<"\n enter the salary=";
+
+   cin>>newptr->sal;
+
+  newptr->next=NULL;
+
+  temp=start;
+
+  if(temp==NULL)
+
+  {
+
+    temp=newptr;
+
+  }
+
+  else
+
+  {
+
+       while(temp->next!=NULL)
+
+      {
+
+         temp=temp->next;
+
+      }
+
+      temp->next=newptr;
+
+  }
+
+}
+
+void emp::add_middle()   // Insertion at the Middle Side
+
+{
+
+  emp *temp,*ptr;
+
+  ptr=new emp;
+
+  int loc,i;
+
+  temp=start;
+
+  cout<<"\n enter at which location you want to enter the element=";
+
+  cin>>loc;
+
+  cout<<"\n enter the id=";
+
+   cin>>ptr->id;
+
+   cout<<"\n enter the empolye name=";
+
+   cin>>ptr->name;
+
+   cout<<"\n enter the designation=";
+
+   cin>>ptr->des;
+
+   cout<<"\n enter the mobile no=";
+
+   cin>>ptr->mn;
+
+   cout<<"\n enter the salary=";
+
+   cin>>ptr->sal;
+
+  if(temp==NULL)
+
+  {
+
+    temp=ptr;
+
+  }
+
+  else
+
+  {
+
+    for(i=1;i<loc;i++)
+
+    {
+
+      temp=temp->next;
+
+    }
+
+    ptr->next=temp->next;
+
+    temp->next=ptr;
+
+  }
+
+ 
+
+}
+
+void emp::del_at_f()    // Deletion at Front side
+
+{
+
+   emp *temp;
+
+   temp=start;
+
+   if(temp==NULL)
+
+   {
+
+    cout<<"\n list is empty";
+
+   }
+
+   else
+
+   {
+
+     start=start->next;
+
+     delete[] temp;
+
+     cout<<"\n record is deleted";
+
+   }
+
+}
+
+void emp::del_l()    // Deletion at Last sides
+
+{
+
+   emp *temp,*q;
+
+   temp=start;
+
+   if(temp==NULL)
+
+   {
+
+    cout<<"\n list is empty";
+
+   }
+
+   else
+
+   {
+
+     while(temp->next->next!=NULL)
+
+     {
+
+      temp=temp->next;
+
+     }
+
+      q=temp->next;
+
+      temp->next=NULL;
+
+      delete[]q;
+
+      cout<<"\n record is deleted";
+
+   }
+
+}
+
+void emp::del_m()   // Deletion at Middle side
+
+{
+
+  emp *temp,*p;
+
+  int loc,i;
+
+  temp=start;
+
+  cout<<"\n enter at which location you want to enter the element=";
+
+  cin>>loc;
+
+  if(temp==NULL)
+
+  {
+
+    cout<<"\n list is empty";
+
+  }
+
+  else
+
+  {
+
+    for(i=1;i<loc;i++)
+
+    {
+
+      temp=temp->next;
+
+    }
+
+    p=temp->next;
+
+    temp->next=p->next;
+
+    delete[]p;
+
+    cout<<"\n record is deleted";
+
+  }
+
+ 
+
+}
+
+ 
+
+int main()
+
+{
+
+  emp n;
+
+  int ch,i;
+
+  start=NULL;
+
+  do{
+
+    cout<<"\n menu \n 1.create \n 2.display \n 3.add at front \n 4.add at middle \n 5.add at last \n 6.delete at front \n 7.delete at last \n 8.delete at middle \n .exit";
+
+    cout<<"\n enter your choice:";
+
+    cin>>ch;
+
+    switch(ch)
+
+    {
+
+      case 1:
+
+      int add;
+
+      do{
+
+        n.create();
+
+        cout<<"\n you want accept more data (yes=1/no=0)=";
+
+        cin>>add;
+
+      }while(add==1);
+
+      break;
+
+      case 2:
+
+      n.display();
+
+      break;
+
+      case 3:
+
+      n.add_front();
+
+      break;
+
+      case 4:
+
+      n.add_middle();
+
+      break;
+
+      case 5:
+
+      n.add_last();
+
+      break;
+
+      case 6:
+
+      n.del_at_f();
+
+      break;
+
+      case 7:
+
+      n.del_l();
+
+      break;
+
+      case 8:
+
+      n.del_m();
+
+      break;
+
+    }
+
+  }while(ch!=0);
+
+  return 0;
+
+}
+
+
+
+
+
+ 
+
+//2
+
+#include<iostream>
+
+using namespace std;
+
+ 
+
+struct node
+
+{
+
+    int coef;
+
+    int exp;
+
+    node *next;
+
+};
+
+ 
+
+node *createnode(int c,int e)
+
+{
+
+    node *t;
+
+    t = new node;
+
+    t->coef=c;
+
+    t->exp=e;
+
+    t->next=NULL;
+
+    return t;
+
+}
+
+ 
+
+node *findlast(node * &head)
+
+{
+
+    node *ptr;
+
+    ptr=head;
+
+    while(ptr->next!=head)
+
+    {
+
+        ptr=ptr->next;
+
+    }
+
+    return(ptr);
+
+}
+
+ 
+
+node *createpoly()
+
+{
+
+    node *head=NULL,*ptr,*temp;
+
+    int c,e,no,i;
+
+    char p;
+
+    cout<<"Enter no.of terms:";
+
+    cin>>no;
+
+    for(i=0;i<no;i++)
+
+    {
+
+        cout<<"Enter coefficient & exponential:\n";
+
+        cin>>c>>e;
+
+        temp=createnode(c,e);
+
+        if(head==NULL)
+
+        {
+
+            head=temp;
+
+            temp->next=head;
+
+        }
+
+        else
+
+        {
+
+            ptr=findlast(head);
+
+            ptr->next=temp;
+
+            temp->next=head;
+
+        }
+
+    }
+
+    return head;
+
+}
+
+ 
+
+node *addpoly(node *ptr1,node *ptr2)
+
+{
+
+    node *head=NULL,*temp,*ptr,*ptr_1,*ptr_2;
+
+    int p,q,z,c=1,f;
+
+    ptr_1=ptr1;
+
+    ptr_2=ptr2;
+
+    do
+
+    {
+
+        z=0;
+
+        f=0;
+
+        ptr_2=ptr2;
+
+        do
+
+        {
+
+            if(ptr_1->exp==ptr_2->exp)
+
+            {
+
+                z=1;
+
+                p = ptr_1->coef + ptr_2->coef;
+
+                q = ptr_1->exp;
+
+                temp=createnode(p,q);
+
+                if(head==NULL)
+
+                   {
+
+                       f=1;
+
+                       head=temp;
+
+                       head->next=head;
+
+                       c=c+1;
+
+                   }
+
+                else
+
+                {
+
+                    ptr=findlast(head);
+
+                    ptr->next=temp;
+
+                    temp->next=head;
+
+                }
+
+                break;
+
+            }
+
+            ptr_2=ptr_2->next;
+
+        }while(ptr_2!=ptr2);
+
+        if(z==0)
+
+            {
+
+                if(c==1)
+
+                {
+
+                    p = ptr_1->coef;
+
+                    q = ptr_1->exp;
+
+                    temp=createnode(p,q);
+
+                    head=temp;
+
+                    head->next=temp;
+
+                }
+
+                else
+
+                {
+
+                    p = ptr_1->coef;
+
+                    q = ptr_1->exp;
+
+                    temp=createnode(p,q);
+
+                    ptr=findlast(head);
+
+                    ptr->next=temp;
+
+                    temp->next=head;
+
+                }
+
+                    c=c+1;
+
+            }
+
+            ptr_1=ptr_1->next;
+
+    }while(ptr_1!=ptr1);
+
+    ptr_1=ptr1;
+
+    ptr_2=ptr2;
+
+ 
+
+    do
+
+    {
+
+        z=0;
+
+        ptr_1=ptr1;
+
+        do
+
+        {
+
+            if(ptr_1->exp==ptr_2->exp)
+
+            {
+
+                z=1;
+
+                break;
+
+ 
+
+                p = ptr_2->coef + ptr_1->coef;
+
+                q = ptr_2->exp;
+
+                temp=createnode(p,q);
+
+                if(head==NULL)
+
+                   {
+
+                       head=temp;
+
+                       head->next=head;
+
+                   }
+
+                else
+
+                {
+
+                    ptr=findlast(head);
+
+                    ptr->next=temp;
+
+                    temp->next=head;
+
+                }
+
+                break;
+
+            }
+
+        ptr_1=ptr_1->next;
+
+ 
+
+        }while(ptr_1!=ptr1);
+
+        if(z==0)
+
+            {
+
+                 p = ptr_2->coef;
+
+                 q = ptr_2->exp;
+
+                temp=createnode(p,q);
+
+                ptr=findlast(head);
+
+                ptr->next=temp;
+
+                temp->next=head;
+
+            }
+
+            ptr_2=ptr_2->next;
+
+    }while(ptr_2!=ptr2);
+
+    return head;
+
+}
+
+ 
+
+node *sorting(node *ptr3)
+
+{
+
+    node *ptr_3,*head=NULL,*temp,*ptr,*ptrr;
+
+    int c=1,g,t,n=0,i,p,q;
+
+    ptr_3=ptr3;
+
+    while(ptr_3->next!=ptr3)
+
+    {
+
+        ptr_3=ptr_3->next;
+
+        c=c+1;
+
+    }
+
+    g=c;
+
+    t=c;
+
+    ptr_3=ptr3;
+
+    while(true)
+
+    {
+
+        c=0;
+
+        ptr=ptr3;
+
+        do
+
+        {
+
+            if(ptr_3->exp > ptr->exp)
+
+                c=c+1;
+
+ 
+
+            ptr=ptr->next;
+
+        }while(ptr!=ptr3);
+
+        if(c==g-1)
+
+        {
+
+            n=n+1;
+
+            p=ptr_3->coef;
+
+            q=ptr_3->exp;
+
+            temp=createnode(p,q);
+
+            if(head==NULL)
+
+            {
+
+                head=temp;
+
+                head->next=head;
+
+            }
+
+            else
+
+            {
+
+                ptrr=findlast(head);
+
+                ptrr->next=temp;
+
+                temp->next=head;
+
+            }
+
+            g=g-1;
+
+        }
+
+        if(n==t)
+
+        {
+
+                break;
+
+        }
+
+ 
+
+        ptr_3=ptr_3->next;
+
+    }
+
+    return head;
+
+}
+
+ 
+
+void display(node *head)
+
+{
+
+    node *ptr;
+
+    ptr=head;
+
+ 
+
+    while(ptr->next!=head)
+
+    {
+
+        cout<<ptr->coef<<"x^"<<ptr->exp<<" + ";
+
+        ptr=ptr->next;
+
+    }
+
+    cout<<ptr->coef<<"x^"<<ptr->exp;
+
+}
+
+ 
+
+int main()
+
+{
+
+    node *head,*ptr1,*ptr2,*ptr3,*ptr4;
+
+    ptr1=createpoly();
+
+    cout<<"\n";
+
+    ptr2=createpoly();
+
+    cout<<" (Polynomial1): ";
+
+    display(ptr1);
+
+    cout<<"\n\n";
+
+    cout<<" (Polynomial2): ";
+
+    display(ptr2);
+
+    ptr3=addpoly(ptr1,ptr2);
+
+    cout<<"\n------------------------------------------\n";
+
+    cout<<"(R.Polynomial): ";
+
+    ptr4=sorting(ptr3);
+
+    display(ptr4);
+
+    cout<<"\n------------------------------------------\n";
+
+    return 0;
+
+}
+
+
+
+
+
+
+
+ 
+
+//3
+
+#include<iostream>
+
+#include<string.h>
+
+#include<stack>
+
+using namespace std;
+
+ 
+
+struct node
+
+{
+
+    string Name;
+
+    int price;
+
+    int load;
+
+    int FuelTC;
+
+    int hp;
+
+    node *lchild;
+
+    node *rchild;
+
+};
+
+ 
+
+node *getnode()
+
+{
+
+    node *temp;
+
+    temp=new node;
+
+    cout<<"Enter the Tractor Name:";
+
+    cin>>temp->Name;
+
+    cout<<"\n Enter price of Tractor:";
+
+    cin>>temp->price;
+
+    cout<<"\n Enter the  load capacity (In tons):";
+
+    cin>>temp->load;
+
+    cout<<"\n Enter Fuel tank capacity:";
+
+    cin>>temp->FuelTC;
+
+    cout<<"\n Enter the hourse power:";
+
+    cin>>temp->hp;
+
+    temp->lchild=NULL;
+
+    temp->rchild=NULL;
+
+    return temp;
+
+}
+
+ 
+
+node *create_tree()
+
+{
+
+    node *temp,*ptr,*root=NULL;
+
+    char ch,dir;
+
+    do{
+
+        temp=getnode();
+
+        if(root==NULL)
+
+            root=temp;
+
+        else
+
+        {
+
+            ptr=root;
+
+            while(ptr!=NULL)
+
+            {
+
+                cout<<"Enter direction(l/r): ";
+
+                cin>>dir;
+
+                if(dir=='l')
+
+                {
+
+                    if(ptr->lchild==NULL){
+
+                        ptr->lchild=temp;
+
+                        break;
+
+                    }
+
+                    else
+
+                    {
+
+                        ptr=ptr->lchild;
+
+                    }
+
+                }
+
+                else
+
+                {
+
+                    if(ptr->rchild==NULL)
+
+                    {
+
+                        ptr->rchild=temp;
+
+                        break;
+
+                    }
+
+                    else
+
+                    {
+
+                        ptr=ptr->rchild;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        cout<<"Want to continue?(y/n): ";
+
+        cin>>ch;
+
+    }while(ch=='y' || ch=='Y');
+
+    return root;
+
+}
+
+ 
+
+//preorder traversal
+
+void preorder(node *root)
+
+{
+
+    stack<node*> s;
+
+    node *temp;
+
+    temp=root;
+
+    do
+
+    {
+
+        while(temp!=NULL)
+
+        {
+
+           cout<<"\n Trator Name      : "<<temp->Name;
+
+           cout<<"\n Hourse Power     : "<<temp->hp<<"HP";
+
+           cout<<"\n Price             :Rs "<<temp->price<<"-/";
+
+           cout<<"\n Fuel Tank Capacity:"<<temp->FuelTC<<"L";
+
+           cout<<"\n Load Capacity  : "<<temp->load<<"Tons"<<endl;
+
+            if(temp->rchild!=NULL)
+
+                s.push(temp->rchild);
+
+            temp=temp->lchild;
+
+        }
+
+        if(!s.empty())
+
+        {
+
+            temp=s.top();
+
+            s.pop();
+
+        }
+
+    }while(!s.empty() || temp!=NULL);
+
+    cout<<endl;
+
+}
+
+ 
+
+//inorder traversal
+
+void inorder(node *root)
+
+{
+
+    stack<node*> s;
+
+    node *curr=root;
+
+    while(curr!=NULL || !s.empty())
+
+    {
+
+        while(curr!=NULL)
+
+        {
+
+            s.push(curr);
+
+            curr=curr->lchild;
+
+        }
+
+        curr=s.top();
+
+        s.pop();
+
+        cout<<"\n Trator Name     : "<<curr->Name;
+
+        cout<<"\n Hourse Power    : "<<curr->hp<<"HP";
+
+        cout<<"\n Price             :Rs "<<curr->price<<"-/";
+
+        cout<<"\n Fuel Tank Capacity:"<<curr->FuelTC<<"L";
+
+        cout<<"\n Load Capacity  : "<<curr->load<<"Tons"<<endl;
+
+        curr=curr->rchild;
+
+    }
+
+    cout<<endl;
+
+}
+
+ 
+
+//postorder traversal
+
+void postorder(node *root)
+
+{
+
+    if(root==NULL)
+
+        return ;
+
+    stack<node*> s1,s2;
+
+    node *curr=root;
+
+    s1.push(curr);
+
+    while (!s1.empty())
+
+    {
+
+        curr=s1.top();
+
+        s1.pop();
+
+        s2.push(curr);
+
+        if(curr->lchild!=NULL)
+
+            s1.push(curr->lchild);
+
+        if(curr->rchild!=NULL)
+
+            s1.push(curr->rchild);
+
+    }
+
+    while(!s2.empty())
+
+    {
+
+        curr=s2.top();
+
+        cout<<"\n Trator Name     : "<<curr->Name;
+
+        cout<<"\n Hourse Power    : "<<curr->hp<<"HP";
+
+        cout<<"\n Price             :Rs "<<curr->price<<"-/";
+
+        cout<<"\n Fuel Tank Capacity:"<<curr->FuelTC<<"L";
+
+        cout<<"\n Load Capacity  : "<<curr->load<<"Tons"<<endl;
+
+        s2.pop();
+
+    }
+
+    cout<<endl;
+
+   
+
+}
+
+ 
+
+int main()
+
+{
+
+    node *t;
+
+    t=create_tree();
+
+    cout<<endl;
+
+    cout<<"Preorder Traversal of Tree:"<<endl;
+
+    preorder(t);
+
+    cout<<"Inorder Traversal of Tree:"<<endl;
+
+    inorder(t);
+
+    cout<<"Postorder Traversal of Tree:"<<endl;
+
+    postorder(t);
+
+    return 0;
+
+}
+
+
+
+
+
+
+
+
+ 
+
+//4
+
+#include<iostream>
+
+#include<stack>
+
+#include<queue>
+
+using namespace std;
+
+ 
+
+struct node
+
+{
+
+    int data;
+
+    node* left;
+
+    node* right;
+
+};
+
+ 
+
+struct node* create_node()
+
+{
+
+    node* temp;
+
+    temp=new node;
+
+    cout<<"ENTER THE DATA:";
+
+    cin>>temp->data;
+
+    temp->left=NULL;
+
+    temp->right=NULL;
+
+    return temp;
+
+}
+
+struct node* create_bst()
+
+{
+
+    node *temp,*ptr,*root=NULL;
+
+    char ch;
+
+    do
+
+    {
+
+        temp=create_node();
+
+        if(root==NULL)
+
+        {
+
+            root=temp;
+
+        }
+
+        else
+
+        {
+
+            ptr=root;
+
+            while(ptr!=NULL)
+
+            {
+
+                if(temp->data<ptr->data)
+
+                {
+
+                    if(ptr->left==NULL)
+
+                    {
+
+                        ptr->left=temp;
+
+                        break;
+
+                    }
+
+                    else
+
+                        ptr=ptr->left;
+
+                }
+
+                else
+
+                {
+
+                    if(ptr->right==NULL)
+
+                    {
+
+                        ptr->right=temp;
+
+                       
+
+                        break;
+
+                    }
+
+                    else
+
+                        ptr=ptr->right;
+
+                }
+
+               
+
+            }
+
+           
+
+        }
+
+        cout<<"\nWANT TO CONTINUE(Y/N):";
+
+        cin>>ch;
+
+    }while(ch=='y' or ch=='Y');
+
+    return root;
+
+}
+
+void preorder(node *root)
+
+{
+
+    node *curr;
+
+    if(root==NULL)
+
+        return;
+
+ 
+
+    stack<node*> s;
+
+    s.push(root);
+
+    while(!s.empty())
+
+    {
+
+        curr=s.top();
+
+        cout<<curr->data<<" ";
+
+        s.pop();
+
+        if(curr->right!=NULL)
+
+            s.push(curr->right);
+
+        if(curr->left!=NULL)
+
+            s.push(curr->left);
+
+               
+
+    }
+
+    cout<<endl;
+
+   
+
+}
+
+void inorder(node *root)
+
+{
+
+    stack<node*> s;
+
+    node *curr=root;
+
+    while(curr!=NULL || !s.empty())
+
+    {
+
+        while(curr!=NULL)
+
+        {
+
+            s.push(curr);
+
+            curr=curr->left;
+
+        }
+
+        curr=s.top();
+
+        s.pop();
+
+        cout<<curr->data<<" ";
+
+        curr=curr->right;
+
+    }
+
+    cout<<endl;
+
+}
+
+//POSTORDER TRAVERSAL PROGRAM
+
+void postorder(node *root){
+
+    if(root==NULL)
+
+        return ;
+
+    stack<node*> s1,s2;
+
+    node *curr=root;
+
+    s1.push(curr);
+
+    while (!s1.empty())
+
+    {
+
+        curr=s1.top();
+
+        s1.pop();
+
+        s2.push(curr);
+
+        if(curr->left!=NULL)
+
+            s1.push(curr->left);
+
+        if(curr->right!=NULL)
+
+            s1.push(curr->right);
+
+    }
+
+    while(!s2.empty()){
+
+        curr=s2.top();
+
+        cout<<curr->data<<" ";
+
+        s2.pop();
+
+    }
+
+    cout<<endl;
+
+   
+
+}
+
+//PROGRAM TO CALCULATE TOTAL NO. OF LEAF NODE OF BST
+
+int getleaf_node(struct node* root)
+
+{
+
+    // If tree is empty
+
+    if (root==NULL)
+
+        return 0;
+
+ 
+
+    // Initialize empty queue.
+
+    queue<node*> q;
+
+ 
+
+    // Do level order traversal starting from root
+
+    int count = 0; // Initialize count of leaves
+
+    q.push(root);
+
+    while (!q.empty())
+
+    {
+
+        struct node *temp = q.front();
+
+        q.pop();
+
+ 
+
+        if (temp->left != NULL)
+
+            q.push(temp->left);
+
+        if (temp->right != NULL)
+
+            q.push(temp->right);
+
+        if (temp->left == NULL && temp->right == NULL)
+
+        {
+
+            cout<<"\n"<<temp->data<<endl;
+
+            count++;
+
+        }
+
+    }
+
+    return count;
+
+}
+
+ //To compute height of tree
+
+int height(node *root){
+
+    int d1,d2;
+
+    if(root == NULL){
+
+        return 0;
+
+    }
+
+    if(root->left == NULL && root->right == NULL)
+
+        return 0;
+
+   
+
+    d1 = height(root->left);
+
+    d2 = height(root->right);
+
+    if(d1>=d2)
+
+        return d1+1;
+
+    else
+
+        return d2+1;
+
+ 
+
+ }
+
+ 
+
+//PROGRAM FOR MIRROR IMAGE OF GIVEN BST
+
+node* mirrorImage(node* root) {
+
+    if (root == NULL) {
+
+        return root;
+
+    }
+
+    node* left = mirrorImage(root->left);
+
+    node* right = mirrorImage(root->right);
+
+    root->left = right;
+
+    root->right = left;
+
+    return root;
+
+}
+
+int main()
+
+{
+
+    node *b;
+
+    int f;
+
+    char ch;
+
+    cout<<"\n\t\tENTER THE ELEMENT IN BST:\n"<<endl;
+
+    b=create_bst();
+
+   
+
+    cout<<"\n\nTHE BINARY SEARCH TREE:";
+
+    cout<<"\n1.PREORDER TRAVERSAL:";
+
+    preorder(b);
+
+    cout<<"\n2.INORDER TRAVERSAL:";
+
+    inorder(b);
+
+    cout<<"\n3.POSTORDER TRAVERSAL:";
+
+    postorder(b);
+
+    cout<<"\n\t\t..MENU..\n\t1.CALCULATE LEAF NODES\n\t2.CALCULATE HEIGHT OF BST\n\t3.DISPLAY MIRROR IMAGE FOR BST\n\t4.EXIT\n";
+
+    do
+
+    {
+
+        cout<<"\nENTER THE CHOICE:";
+
+        cin>>f;
+
+        switch(f)
+
+        {
+
+            case 1:
+
+                cout<<"\nTOTAL NO. OF LEAF NODES IN BST:\n"<<getleaf_node(b)<<endl;
+
+                break;
+
+            case 2:
+
+                cout << "\nThe height of the BST is: " << height(b) <<endl;
+
+                break;
+
+            case 3:
+
+                cout<<"\nMIRROR IMAGE OF BST(PREORDER TRAVERSAL):\n"<<endl;
+
+                b=mirrorImage(b);
+
+                preorder(b);
+
+                break;
+
+            case 4:
+
+                exit(1);
+
+                break;  
+
+        }
+
+        cout<<"\n\nWANT TO CONTINUE(Y/N):";
+
+        cin>>ch;
+
+    }while(ch=='y' || ch=='Y');
+
+    return 0;
+
+}
+
+//5
+
+#include<iostream>
+
+#include<string>
+
+#define max 20
+
+using namespace std;
+
+class graph
+
+{
+
+    private:
+
+        string data;
+
+        graph *link,*down,*start;
+
+        string city[10];
+
+        int a[10][10];
+
+        int n;
+
+    public:
+
+        void create_list();
+
+        void display_list();
+
+        void create_matrix();
+
+        void display_matrix();
+
+};
+
+ 
+
+void graph::create_list()
+
+{
+
+    graph *temp,*node,*temp1,*node1;
+
+    temp=new graph;
+
+    temp1=new graph;
+
+    node=new graph;
+
+    node1=new graph;
+
+    char ch,ch1;
+
+    cout<<"\nEnter the parent node: ";
+
+    cin>>node->data;
+
+    node->down=NULL;
+
+    node->link=NULL;
+
+    start=node;
+
+    temp=node1=start;
+
+    temp1=node;
+
+    do
+
+    {
+
+        node1=new graph;
+
+        cout<<"\nEnter adjacent node for: "<<node->data<<"->";
+
+        cin>>node1->data;
+
+        node1->down=NULL;
+
+        node1->link=NULL;
+
+        temp1->link=node1;
+
+        temp1=node1;
+
+        cout<<"\nDo you want to insert more adjacent nodes?(Y/N): ";
+
+        cin>>ch;
+
+    }while(ch=='y' || ch=='Y');
+
+    cout<<"\nDo you want to enter more parent nodes?(Y/N): ";
+
+    cin>>ch1;
+
+    if(ch1=='y' || ch1=='Y')
+
+    {
+
+        do
+
+        {
+
+            node=new graph;
+
+            cout<<"\nEnter the parent node: ";
+
+            cin>>node->data;
+
+            node->down=NULL;
+
+            node->link=NULL;
+
+            temp->down=node;
+
+            temp=node;
+
+            temp1=node;
+
+            do
+
+            {
+
+                node1=new graph;
+
+                cout<<"\nEnter adjacent node for "<<node->data<<"->";
+
+                cin>>node1->data;
+
+                node1->down=NULL;
+
+                node1->link=NULL;
+
+                temp1->link=node1;
+
+                temp1=node1;
+
+                cout<<"\nDo you want to insert more adjacent nodes?(Y/N): ";
+
+                cin>>ch;
+
+            }while(ch=='y' || ch=='Y');
+
+            cout<<"\nDo you want to enter more parent nodes?(Y/N): ";
+
+            cin>>ch1;
+
+        }while(ch1=='y' || ch1=='Y');
+
+    }
+
+}
+
+ 
+
+void graph::display_list()
+
+{
+
+    graph *temp,*temp1;
+
+    temp=new graph;
+
+    temp1=new graph;
+
+    temp=start;
+
+    cout<<"\nThe graph is: "<<endl;
+
+    while(temp!=NULL)
+
+    {
+
+        cout<<temp->data<<"->";
+
+        temp1=temp->link;
+
+        while(temp1!=NULL)
+
+        {
+
+            cout<<"->"<<temp1->data;
+
+            temp1=temp1->link;
+
+        }
+
+ 
+
+        temp=temp->down;
+
+        if(temp!=NULL)
+
+        {
+
+            cout<<"\n";
+
+        }
+
+    }
+
+}
+
+ 
+
+void graph::create_matrix()
+
+{
+
+    cout<<"\nEnter number of cities: ";
+
+    cin>>n;
+
+    cout<<"\nEnter name of cities: ";
+
+    for(int i=0;i<n;i++)
+
+    {
+
+        cin>>city[i];
+
+    }
+
+    cout<<"\nEnter the distances: ";
+
+    for(int i=0;i<n;i++)
+
+    {
+
+        for(int j=i;j<n;j++)
+
+        {
+
+            if(i==j)
+
+            {
+
+                a[i][j]=0;
+
+                continue;
+
+            }
+
+            cout<<"\nEnter the distance between "<<city[i]<<" and "<<city[j]<<": ";
+
+            cin>>a[i][j];
+
+            a[j][i]=a[i][j];
+
+        }
+
+    }
+
+}
+
+ 
+
+void graph::display_matrix()
+
+{
+
+    for(int i=0;i<n;i++)
+
+    {
+
+        cout<<"\n";
+
+        for(int j=0;j<n;j++)
+
+        {
+
+            cout<<a[i][j]<<"\t";
+
+        }
+
+    }
+
+}
+
+ 
+
+int main()
+
+{
+
+    int ch;
+
+    graph g;
+
+    do
+
+    {
+
+        cout<<"\nMenu:";
+
+        cout<<"\n1.Create linked list \n2.Display linked list \n3.Create Matrix \n4.Display Matrix";
+
+        cout<<"\nEnter your choice: ";
+
+        cin>>ch;
+
+        switch(ch)
+
+        {
+
+            case 1:
+
+                g.create_list();
+
+                break;
+
+            case 2:
+
+                g.display_list();
+
+                break;
+
+            case 3:
+
+                g.create_matrix();
+
+                break;
+
+            case 4:
+
+                g.display_matrix();
+
+                break;
+
+            default:
+
+                cout<<"\nInvalid Choice!!";
+
+        }
+
+    }while(ch!=0);
+
+    return 0;
+
+}
+
+
+ 
+
+//6
+
+#include<iostream>
+
+using namespace std;
+
+ 
+
+int key[10],n,chain[10];
+
+int i;
+
+ 
+
+class student
+
+{
+
+    public:
+
+        int rollno,prn;
+
+        string name,address;
+
+        float per;
+
+        void declare();
+
+        void table();
+
+        void accept();
+
+       
+
+}h[10];
+
+ 
+
+void student:: declare()
+
+{
+
+    cout<<"Enter the no.of student:";
+
+    cin>>n;
+
+    cout<<"Enter the keys:"<<endl;
+
+    for(i=0;i<n;i++)
+
+    {
+
+        cin>>key[i];
+
+    }
+
+    for(i=0;i<10;i++)
+
+    {
+
+        h[i].prn=-1;
+
+        chain[i]=0;
+
+    }
+
+}
+
+ 
+
+void student:: table()
+
+{
+
+    cout<<"\nPRN\tRollNo\tName\tAddress\tPer\tChain";
+
+    for(i=0;i<10;i++)
+
+    {
+
+        cout<<"\n"<<h[i].prn<<"\t"<<h[i].rollno<<"\t"<<h[i].name<<"\t"<<h[i].address<<"\t"<<h[i].per<<"\t"<<chain[i];
+
+       
+
+    }
+
+   
+
+}
+
+void student::accept()
+
+{
+
+    int no,pos;
+
+    for(i=0;i<n;i++)
+
+    {
+
+        no=key[i]%10;
+
+        do
+
+        {
+
+            if(h[no].prn==-1)
+
+            {
+
+                h[no].prn=key[i];
+
+                cout<<"\nEnter the roll no.:";
+
+                cin>>h[no].rollno;
+
+                cout<<"\nEnter the Name:";
+
+                cin>>h[no].name;
+
+                cout<<"\nEnter the Address:";
+
+                cin>>h[no].address;
+
+                cout<<"\nEnter the Percentage:";
+
+                cin>>h[no].per;
+
+                break;
+
+            }
+
+            else
+
+            {
+
+                chain[no]=no+1;
+
+                no++;
+
+                if(no>10)
+
+                {
+
+                    chain[no]=no+1;
+
+                    no=0;
+
+                }
+
+            }
+
+        }while(no<10);
+
+    }
+
+ 
+
+}
+
+ 
+
+int main()
+
+{
+
+    student obj;
+
+    char ch;
+
+    do
+
+    {
+
+        obj.declare();
+
+        obj.accept();
+
+        obj.table();
+
+        cout<<"\nWant to continue(y/n):";
+
+        cin>>ch;    
+
+    }while(ch=='y' || ch=='Y');
+
+   
+
+    return 0;
+
+}
+
+
+
+
+ 
+
+//7
+
+#include<iostream>
+
+#include<string.h>
+
+using namespace std;
+
+class Graph
+
+{
+
+    char vertices[10][10];
+
+    int cost[10][10],no;
+
+    public:
+
+        Graph();
+
+        void creat_graph();
+
+        void display();
+
+        int Position(char key[]);
+
+        void kruskal_algo();        
+
+};
+
+Graph::Graph()
+
+{
+
+    no=0;
+
+    for(int i=0;i<10;i++)
+
+    {
+
+        for(int j=0;j<10;j++)
+
+        {
+
+            cost[i][j]= 0 ;
+
+        }
+
+    }  
+
+}
+
+void Graph::creat_graph()
+
+{
+
+    char ans,Start[10],End[10];
+
+    int wt,i,j;
+
+    cout<<"\nEnter the number of vertices:";
+
+    cin>>no;
+
+    cout<<"\nEnter the vertices:\n";
+
+    for(int i=0;i<no;i++)
+
+    {
+
+        cin>>vertices[i];
+
+    }
+
+    do
+
+    {
+
+        cout<<"\nEnter Start and End vertex of the edge:";
+
+        cin>>Start>>End;
+
+        cout<<"\nEnter weight:";
+
+        cin>>wt;
+
+        i=Position(Start);
+
+        j=Position(End);
+
+        cost[i][j]=cost[j][i]=wt;
+
+        cout<<"\nDo you want to add more edges(y/n):";
+
+        cin>>ans;
+
+    }while(ans=='y'||ans=='Y');
+
+}
+
+//Displaying Cost Matrix/
+
+void Graph::display()
+
+{
+
+    int i,j;
+
+    cout<<"\n\nCost Matrix";
+
+    for(i=0;i<no;i++)
+
+    {
+
+        cout<<"\n";
+
+        for(j=0;j<no;j++)
+
+        cout<<"\t"<<cost[i][j];
+
+    }
+
+}
+
+//2Retriving position of vertices in vertices array/
+
+int Graph::Position(char key[10])
+
+{
+
+    int i;
+
+    for(i=0;i<10;i++)
+
+    {
+
+        if(strcmp(vertices[i],key)==0)
+
+        {
+
+            return i;
+
+        }
+
+    }
+
+    return -1;
+
+}
+
+void Graph::kruskal_algo()
+
+{
+
+    int i,j,v[10]={0},x,y,Total_cost=0,min,gr=1,flag=0,temp,d;
+
+    while(flag==0)
+
+    {
+
+        min=999;
+
+        for(i=0;i<no;i++)
+
+        {
+
+            for(j=0;j<no;j++)
+
+            {
+
+                if(cost[i][j]<min)
+
+                {
+
+                    min=cost[i][j];
+
+                    x=i;
+
+                    y=j;
+
+                }
+
+            }
+
+        }
+
+   
+
+        if(v[x]==0&&v[y]==0)
+
+        {
+
+            v[x]=v[y]=gr;
+
+            gr++;
+
+        }
+
+        else if(v[x]!=0&&v[y]==0)
+
+        {
+
+            v[y]=v[x];
+
+        }
+
+        else if(v[x]==0&&v[y]!=0)
+
+        {
+
+            v[x]=v[y];
+
+        }
+
+        else
+
+        {
+
+            if(v[x]!=v[y])
+
+            {
+
+                d=v[x];
+
+                for(i=0;i<no;i++)
+
+                {
+
+                    if(v[i]==d)
+
+                    {
+
+                        v[i]=v[y];
+
+                    }
+
+                }
+
+            }
+
+            cost[x][y]=cost[y][x]=999;
+
+            Total_cost=Total_cost+min;
+
+            cout<<"\n\t"<<vertices[x]<<"\t\t"<<vertices[y]<<"\t\t"<<min;
+
+            temp=v[0];
+
+            flag=1;
+
+            for(i=0;i<no;i++)
+
+            {
+
+                if(temp!=v[i])
+
+                {
+
+                    flag=0;
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+    }
+
+    cout<<"\nTotal cost of the tree "<<Total_cost;
+
+}
+
+ 
+
+int main()
+
+{
+
+    Graph g;
+
+    g.creat_graph();
+
+    g.display();
+
+    cout<<"\n\n\nMinimum Spanning tree using kruskal algo";
+
+    cout<<"\nSource vertex\tDestination vertex\tWeight\n";
+
+    g.kruskal_algo();
+
+    return 0;
+
+}
