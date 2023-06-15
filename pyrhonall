@@ -1,0 +1,101 @@
+#1
+number = 1
+
+while number <= 10:
+    print(number)
+    number += 1
+
+#2
+number = 100
+
+while number <= 200:
+    if number % 2 == 0:
+        print(number)
+    number += 1
+
+#3
+for num in range(1, 11):
+    if num == 7:
+        print("Breaking the loop...")
+        break
+    print(num)
+
+print("Loop has ended.")
+
+#4
+import tkinter as tk
+
+# Create the main window
+window = tk.Tk()
+
+# Set the title of the window
+window.title("My GUI Program")
+
+# Run the main event loop
+window.mainloop()
+
+#5
+import tkinter as tk
+
+# Create the main window
+window = tk.Tk()
+
+# Set the title of the window
+window.title("My GUI Program")
+
+# Create a label widget
+label = tk.Label(window, text="Hello, World!")
+
+# Add the label to the window
+label.pack()
+
+# Run the main event loop
+window.mainloop()
+
+#6
+import tkinter as tk
+from tkinter import font
+
+def change_font():
+    font_name = font_name_entry.get()
+    font_size = int(font_size_entry.get())
+    font_bold = bold_var.get()
+
+    # Configure label font
+    label.config(font=(font_name, font_size, "bold" if font_bold else "normal"))
+
+# Create the main window
+window = tk.Tk()
+window.title("Font Changer")
+
+# Create a label
+label = tk.Label(window, text="Hello, World!")
+label.pack()
+
+# Create a frame for font settings
+font_frame = tk.Frame(window)
+font_frame.pack(pady=10)
+
+# Font name entry
+font_name_label = tk.Label(font_frame, text="Font Name:")
+font_name_label.grid(row=0, column=0, padx=5)
+font_name_entry = tk.Entry(font_frame)
+font_name_entry.grid(row=0, column=1, padx=5)
+
+# Font size entry
+font_size_label = tk.Label(font_frame, text="Font Size:")
+font_size_label.grid(row=1, column=0, padx=5)
+font_size_entry = tk.Entry(font_frame)
+font_size_entry.grid(row=1, column=1, padx=5)
+
+# Bold checkbox
+bold_var = tk.IntVar()
+bold_checkbutton = tk.Checkbutton(font_frame, text="Bold", variable=bold_var)
+bold_checkbutton.grid(row=2, columnspan=2)
+
+# Apply button
+apply_button = tk.Button(window, text="Apply", command=change_font)
+apply_button.pack(pady=10)
+
+# Run the GUI loop
+window.mainloop()
