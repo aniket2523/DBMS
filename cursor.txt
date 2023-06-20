@@ -1,0 +1,44 @@
+CREATE DATABASE STUDENT;
+USE STUDENT;
+CREATE TABLE Student1(rno1 int(10),name1 varchar(50),class1 varchar(50),PRIMARY 
+KEY(rno1));
+CREATE TABLE Student2(rno2 int(10),name2 varchar(50),class2 varchar(50),PRIMARY 
+KEY(rno2));
+SELECT * FROM Student1;
++------+-----------+---------+
+| rno1 | name1 | class1 |
++------+-----------+---------+
+| 1 | samiksha | SYCOMP |
+| 2 | vaishnavi | SYCOMP |
+| 3 | kalyani | SYCIVIL |
+| 4 | isha | SYIT |
++------+-----------+---------+
+DELIMITER $$
+create procedure proc_copy1()
+BEGIN
+DECLARE vfinished int default 0;
+DECLARE r int;
+DECLARE n varchar(50);
+DECLARE c varchar(50);
+DECLARE studcursor cursor for select * from student1;
+DECLARE continue handler for not found set vfinished=1;
+open studcursor;
+getdata:loop
+fetch studcursor into r,c,n;
+if vfinished=1 then
+leave getdata;
+end if;
+insert into student2 values(r,c,n);
+end loop getdata;
+end $$
+DELIMITER ;
+call proc_copy1();
+SELECT * FROM Student2;
++------+-----------+---------+
+| rno2 | name2 | class2 |
++------+-----------+---------+
+| 1 | samiksha | SYCOMP |
+| 2 | vaishnavi | SYCOMP |
+| 3 | kalyani | SYCIVIL |
+| 4 | isha | SYIT |
++------+-----------+---------+

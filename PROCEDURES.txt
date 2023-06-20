@@ -1,0 +1,122 @@
+STORED PROCEDURES
+A)USING IN PARAMETER:
+TO get a product ID:
+DELIMITER $$
+CREATE PROCEDURE BMS.GetProductID(IN ProductID INT)
+BEGIN
+SELECT * FROM PRODUCTS WHERE Pid=ProductID;
+END $$
+DELIMITER ;
+CALLING A PROCEDURE: 
+CALL BMS.GetProductID(3);
++-----+-------+--------------+--------+----------+
+| Pid | Pname | Pflavour | Pprice | pratings |
++-----+-------+--------------+--------+----------+
+| 3 | cake | Butterscotch | 300 | 3.90 |
++-----+-------+--------------+--------+----------+
+B)USING OUT PARAMETER:
+To get a average price of all the products:
+DELIMITER $$
+CREATE PROCEDURE BMS.GetAvgP(OUT average Decimal(5,2))
+BEGIN
+SELECT AVG(Pprice) INTO average FROM Products;
+END $$
+DELIMITER ;
+CALLING : CALL BMS.GetAvgP(@average_price);
+ SELECT @average_price;
++----------------+
+| @average_price |
++----------------+
+| 360.00 |
++----------------+
+C)USING INOUT PARAMETER:
+To get a product name and product price from a given product id:
+DELIMITER $$
+CREATE PROCEDURE BMS.GetDetails(IN P int,OUT N varchar(50),OUT A int)
+BEGIN 
+SELECT Pname,Pprice INTO N,A FROM Products WHERE Pid=P;
+END $$
+DELIMITER ;
+CALLING: CALL BMS.GetDetails(3,@N,@A);
+SELECT @N,@A;
++------+------+
+| @N | @A |
++------+------+
+| cake | 300 |
++------+------+
+* Stored Procedure to increase the Price of the product By 20 % for a given Product 
+ID.
+DELIMITER $$
+CREATE PROCEDURE BMS.Inc(IN P int)
+BEGIN
+DECLARE T Decimal(6,2);
+SELECT Pprice into T FROM Products WHERE Pid=P;
+SET T=T+T*0.2;
+UPDATE Products SET Pprice=T WHERE Pid=P;
+END $$
+DELIMITER ;
+CALLING: CALL BMS.Inc(3);
+SELECT * FROM Products;
++-----+--------------+--------------+--------+----------+
+| Pid | Pname | Pflavour | Pprice | pratings |
++-----+--------------+--------------+--------+----------+
+| 1 | Cake | Vanilla | 250 | 4.20 |
+| 2 | Cake | Chocolate | 450 | 4.90 |
+| 3 | cake | Butterscotch | 360 | 3.90 |
+| 4 | Pastry | White Forest | 120 | 4.30 |
+| 5 | pastry | Mango | 80 | 4.20 |
+| 6 | Cheesecake | Blueberry | 800 | 5.00 |
+| 7 | Garlic Bread | Cheese | 520 | 4.90 |
++-----+--------------+--------------+--------+----------+
+*Stored Procedure To update the product reviews based on the product ratings.
+IF ratings >=4.9 Update the review as "best".
+IF ratings is between 3.0 to 4.9 then Update the review as "Good".
+IF ratings <3.0 then Update the review as "Better".
+DELIMITER $$
+CREATE PROCEDURE BMS.reviews(IN P int,OUT reviews varchar(50))
+BEGIN
+DECLARE S Float(6,2);
+SELECT Pratings INTO S FROM Products WHERE Pid=P;
+IF S>=4.9 THEN SET reviews="Best";
+ELSEIF S<=4.9 AND S>3.0 THEN SET reviews="Good";
+ELSE SET reviews="Better";
+END IF;
+END $$
+DELIMITER ;
+CALL BMS.reviews(3,@reviews);
+SELECT @reviews;
++----------+
+| @reviews |
++----------+
+| Good |
++----------+
+*Stored Function To Perfrom the Addition Of Two Numbers:
+delimiter //
+create procedure addn(a int,b int)
+begin
+declare c int;
+set c=a+b;
+select concat("Addition is: ",c);
+end //
+delimiter ;
+call addn(12,34);
++---------------------------+
+| concat("Addition is: ",c) |
++---------------------------+
+| Addition is: 46 |
++---------------------------+
+*Stored Procedure To perform substraction of two numbers:
+DELIMITER $$
+CREATE PROCEDURE Practice.Sub(IN A int,IN B int)
+BEGIN
+DECLARE C int;
+SET C=A-B;
+SELECT CONCAT("Substraction is: ",C);
+END $$
+DELIMITER ;
+CALL Sub(10,8);
++-------------------------------+
+| CONCAT("Substraction is: ",C) |
++-------------------------------+
+| Substraction is: 2 |
++-------------------------------+

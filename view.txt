@@ -1,0 +1,104 @@
+CREATE DATABASE BMS;
+USE BMS;
+CREATE TABLE Products(Pid int(50),Pname varchar(50) not null, Pflavour 
+varchar(50),Pprice int(50),pratings float(3,2),PRIMARY KEY(Pid));
+CREATE TABLE Customers(Cid int(50),Cname varchar(50) not null, Cadd 
+varchar(500),Cphno int(50),pid int(50),PRIMARY KEY(Cid),FOREIGN KEY (Pid) 
+REFERENCES Products(Pid));
+CREATE TABLE B_info(Bno int(10),Bdate date not null,PRIMARY KEY(Bno));
+SELECT * FROM Products;
++-----+--------------+--------------+--------+----------+
+| Pid | Pname | Pflavour | Pprice | pratings |
++-----+--------------+--------------+--------+----------+
+| 1 | Cake | Vanilla | 250 | 4.20 |
+| 2 | Cake | Chocolate | 450 | 4.90 |
+| 3 | cake | Butterscotch | 300 | 3.90 |
+| 4 | Pastry | White Forest | 120 | 4.30 |
+| 5 | pastry | Mango | 80 | 4.20 |
+| 6 | Cheesecake | Blueberry | 800 | 5.00 |
+| 7 | Garlic Bread | Cheese | 520 | 4.90 |
++-----+--------------+--------------+--------+----------+
+SELECT * FROM Customers;
++-----+-------------+-----------+-----------+------+
+| Cid | Cname | Cadd | Cphno | pid |
++-----+-------------+-----------+-----------+------+
+| 101 | Mr.Malhotra | Nagpur | 786652244 | 2 |
+| 102 | Mr.Desai | Shirdi | 65658954 | 6 |
+| 103 | Mr.Sarokte | Sangamner | 689554521 | 4 |
+| 104 | Mr.Verma | Kopargaon | 98545521 | 1 |
+| 105 | Ms.Rathod | Mumbai | 552154862 | 3 |
+| 106 | Ms.Kulkarni | Pune | 57895245 | 4 |
++-----+-------------+-----------+-----------+------+
+SELECT * FROM Purchase;
++-----+------------+------+------+
+| Pno | Pdate | Pid | Cid |
++-----+------------+------+------+
+| 11 | 2023-06-05 | 2 | 103 |
+| 12 | 2023-02-25 | 3 | 105 |
+| 13 | 2022-11-02 | 7 | 101 |
++-----+------------+------+------+
+SELECT * FROM B_info;
++------+------------+------+
+| Bno | Bdate | Pno |
++------+------------+------+
+| 1001 | 2023-12-25 | 11 |
+| 1002 | 2022-06-13 | 12 |
++------+------------+------+
+HORIZONTAL VIEW:
+CREATE VIEW CAKE AS SELECT * FROM Products WHERE Pname='cake';
+SELECT * FROM CAKE;
++-----+-------+--------------+--------+----------+
+| Pid | Pname | Pflavour | Pprice | pratings |
++-----+-------+--------------+--------+----------+
+| 1 | Cake | Vanilla | 250 | 4.20 |
+| 2 | Cake | Chocolate | 450 | 4.90 |
+| 3 | cake | Butterscotch | 300 | 3.90 |
++-----+-------+--------------+--------+----------+
+VERTICAL VIEW:
+CREATE VIEW CUSTOMERS_LITE AS SELECT Cid,Cname,Cphno FROM Customers;
+SELECT * FROM CUSTOMERS_LITE;
++-----+-------------+-----------+
+| Cid | Cname | Cphno |
++-----+-------------+-----------+
+| 101 | Mr.Malhotra | 786652244 |
+| 102 | Mr.Desai | 65658954 |
+| 103 | Mr.Sarokte | 689554521 |
+| 104 | Mr.Verma | 98545521 |
+| 105 | Ms.Rathod | 552154862 |
+| 106 | Ms.Kulkarni | 57895245 |
++-----+-------------+-----------+
+HYBRID VIEW:
+CREATE VIEW Customers_Info AS SELECT Cid,Cname,Cphno FROM Customers 
+WHERE Pid=3;
+SELECT * FROM Customers_Info;
++-----+-----------+-----------+
+| Cid | Cname | Cphno |
++-----+-----------+-----------+
+| 105 | Ms.Rathod | 552154862 |
++-----+-----------+-----------+
+INDEXING:
+CREATE INDEX sample_index on Products(Pid);
+SELECT * FROM Products;
++-----+--------------+--------------+--------+----------+
+| Pid | Pname | Pflavour | Pprice | pratings |
++-----+--------------+--------------+--------+----------+
+| 1 | Cake | Vanilla | 250 | 4.20 |
+| 2 | Cake | Chocolate | 450 | 4.90 |
+| 3 | cake | Butterscotch | 300 | 3.90 |
+| 4 | Pastry | White Forest | 120 | 4.30 |
+| 5 | pastry | Mango | 80 | 4.20 |
+| 6 | Cheesecake | Blueberry | 800 | 5.00 |
+| 7 | Garlic Bread | Cheese | 520 | 4.90 |
++-----+--------------+--------------+--------+----------+
+CREATE INDEX sample_index2 on Customers(Cid);
+SELECT * FROM Customers;
++-----+-------------+-----------+-----------+------+
+| Cid | Cname | Cadd | Cphno | pid |
++-----+-------------+-----------+-----------+------+
+| 101 | Mr.Malhotra | Nagpur | 786652244 | 2 |
+| 102 | Mr.Desai | Shirdi | 65658954 | 6 |
+| 103 | Mr.Sarokte | Sangamner | 689554521 | 4 |
+| 104 | Mr.Verma | Kopargaon | 98545521 | 1 |
+| 105 | Ms.Rathod | Mumbai | 552154862 | 3 |
+| 106 | Ms.Kulkarni | Pune | 57895245 | 4 |
++-----+-------------+-----------+-----------+------+

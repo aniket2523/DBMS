@@ -1,0 +1,49 @@
+STORED FUNCTIONS:
+*Stored function for Addition.
+DELIMITER $$
+CREATE FUNCTION fun(a int,b int)RETURNS INT
+DETERMINISTIC BEGIN
+DECLARE c int;
+SET c=a+b;
+RETURN c;
+END $$
+DELIMITER ;
+SELECT fun(10,2)'Addition';
++----------+
+| Addition |
++----------+
+| 12 |
++----------+
+*Stored Function For Substraction:
+DELIMITER $$
+CREATE FUNCTION fun2(a int,b int) RETURNS int
+DETERMINISTIC BEGIN
+DECLARE c int;
+SET c=a-b;
+RETURN c;
+END $$
+DELIMITER ;
+SELECT fun2(6,4)'Substraction';
++--------------+
+| Substraction |
++--------------+
+| 2 |
++--------------+
+* stored function using if else:
+DELIMITER $$
+CREATE FUNCTION fun3(Pratings float(6,2)) RETURNS varchar(50)
+DETERMINISTIC BEGIN
+DECLARE reviews varchar(50);
+IF Pratings>=4.9 THEN SET reviews="Best";
+ELSEIF Pratings<=4.9 AND Pratings>3.0 THEN SET reviews="Good";
+ELSE SET reviews="Better";
+END IF;
+RETURN reviews;
+END $$
+DELIMITER ;
+SELECT fun3(4.9)'Reviews';
++---------+
+| Reviews |
++---------+
+| Best |
++---------+

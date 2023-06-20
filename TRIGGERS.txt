@@ -1,0 +1,239 @@
+TRIGGERS:
+*Trigger to delete a particular data and append it into a new table:
+SELECT * FROM Student_OLD;
++-----+-----------+-------+
+| Rno | Name | Marks |
++-----+-----------+-------+
+| 1 | Samiksha | 95.50 |
+| 2 | Vaishnavi | 96.00 |
+| 3 | Deepti | 99.00 |
+| 4 | Arya | 85.00 |
+| 5 | kavya | 91.80 |
+| 6 | Vidya | 90.62 |
++-----+-----------+-------+
+DELIMITER $$
+CREATE TRIGGER Student_Update 
+BEFORE DELETE
+ON Student_OLD
+FOR EACH ROW 
+BEGIN
+INSERT INTO Student_Copy VALUES(OLD.Rno,OLD.Name,OLD.Marks);
+END $$
+DELIMITER ;
+DELETE FROM Student_OLD WHERE Rno=1;
+SELECT * FROM Student_OLD;
++-----+-----------+-------+
+| Rno | Name | Marks |
++-----+-----------+-------+
+| 2 | Vaishnavi | 96.00 |
+| 3 | Deepti | 99.00 |
+| 4 | Arya | 85.00 |
+| 5 | kavya | 91.80 |
+| 6 | Vidya | 90.62 |
++-----+-----------+-------+
+SELECT * FROM Student_Copy;
++-----+----------+-------+
+| Rno | Name | Marks |
++-----+----------+-------+
+| 1 | Samiksha | 95.50 |
++-----+----------+-------+
+EX 2:
+Trigger to update a record including a stored procedure:
+CREATE DATABASE Boat;
+USE Boat;
+SELECT * FROM Sailor;
++-----+-------+----------+
+| Sid | Sname | Sratings |
++-----+-------+----------+
+| 1 | ABC | 8.50 |
+| 2 | XYZ | 9.00 |
+| 3 | PQR | 5.60 |
+| 4 | ASD | 7.80 |
+| 5 | SDR | 4.20 |
++-----+-------+----------+
+DELIMITER $$
+CREATE TRIGGER Update_rating
+BEFORE INSERT 
+ON Reserves 
+FOR EACH ROW
+BEGIN
+CALL update_sailor(NEW.Sid);
+END $$
+CREATE PROCEDURE update_sailor(IN a int)
+BEGIN
+UPDATE Sailor SET Sratings=Sratings+1 WHERE Sid=a;
+END $$
+DELIMITER ;
+CALL update_sailor(1);
+SELECT * FROM Sailor;
++-----+-------+----------+
+| Sid | Sname | Sratings |
++-----+-------+----------+
+| 1 | ABC | 9.50 |
+| 2 | XYZ | 9.00 |
+| 3 | PQR | 5.60 |
+| 4 | ASD | 7.80 |
+| 5 | SDR | 4.20 |
++-----+-------+----------+
+E.X 3:
+USE SAM1;
+CREATE TABLE Borrower(Rollin int (10),Name varchar(50),DateOfIssue date not 
+null,NameOfBook varchar(50) not null,Status varchar(10),PRIMARY KEY(Rollin));
+CREATE TABLE Fine(Roll_no int(10),Date date not null,Amt int(10),PRIMARY 
+KEY(Roll_no));
+SELECT * FROM Borrower;
++--------+-----------+-------------+------------+--------+
+| Rollin | Name | DateOfIssue | NameOfBook | Status |
++--------+-----------+-------------+------------+--------+
+| 1 | Samiksha | 2023-06-21 | OSA | I |
+| 2 | Vaishnavi | 2023-04-01 | DBMS | I |
+| 3 | Vidya | 2022-03-16 | OOP | I |
+| 4 | Shravani | 2023-02-10 | DEDC | I |
+| 5 | Sneha | 2023-06-05 | ADS | I |
++--------+-----------+-------------+------------+--------+
+DELIMITER $$
+CREATE PROCEDURE calfine3( IN R int,IN N varchar(50))
+BEGIN
+DECLARE no_of_days INT;
+DECLARE fine_amount int;
+DECLARE date1 date;
+SELECT DateOfIssue INTO date1 FROM Borrower WHERE Rollin=R AND 
+NameOfBook=N;
+SET no_of_days=datediff(curdate(),date1);
+if(no_of_days>15 AND no_of_days<30) THEN SET fine_amount=(no_of_days-15)*5;
+end if;
+if(no_of_days>30) THEN SET 
+fine_amount=((no_of_days-15)-(no_of_days-30))*5+(no_of_days-30)*50;
+end if;
+SELECT Concat("Fine is: ",fine_Amount);
+if(fine_amount>0)then
+insert into fine values(Roll_no,Date,fine_amount);
+UPDATE Borrower SET Status='R' WHERE Rno=rno;
+END IF;
+END $$
+DELIMITER ;
+CALL calfine3(2,'DBMS');
++---------------------------------+
+| Concat("Fine is: ",fine_Amount) |
++---------------------------------+
+| Fine is: 2475 |
++---------------------------------+
+
+
+
+CREATE DATABASE Library;
+USE Library;
+Create Table Library(Bid int(10),Bname varchar(50) not null,Bprice int(20),PRIMARY 
+KEY(Bid));
+Create Table Library_Audit(Bid int(10),Bname varchar(50) not null,Bprice 
+int(20),PRIMARY KEY(Bid));
+SELECT * FROM Library;
++-----+-------+--------+
+| Bid | Bname | Bprice |
++-----+-------+--------+
+| 1 | DEDC | 250 |
+| 2 | DBMS | 350 |
+| 3 | OOP | 200 |
+| 4 | ADS | 400 |
++-----+-------+--------+
+DELIMITER $$
+CREATE TRIGGER Library_Update
+BEFORE DELETE 
+ON Library 
+FOR EACH ROW
+BEGIN
+INSERT INTO Library_Audit VALUES (OLD.Bid,OLD.Bname,OLD.Bprice);
+END $$
+DELIMITER ;
+DELETE FROM Library WHERE Bid=1;
+SELECT * FROM Library;
++-----+-------+--------+
+| Bid | Bname | Bprice |
++-----+-------+--------+
+| 2 | DBMS | 350 |
+| 3 | OOP | 200 |
+| 4 | ADS | 400 |
++-----+-------+--------+
+mysql> SELECT * FROM Library_Audit;
++-----+-------+--------+
+| Bid | Bname | Bprice |
++-----+-------+--------+
+| 1 | DEDC | 250 |
++-----+-------+--------+
+DELIMITER $$
+CREATE TRIGGER library_change
+BEFORE INSERT
+ON Library_Audit
+FOR EACH ROW 
+BEGIN
+CALL Price_update(NEW.Bprice);
+END $$
+CREATE PROCEDURE Price_update(IN A int)
+BEGIN
+UPDATE Library SET Bprice=Bprice+10 WHERE Bid=A;
+END $$
+DELIMITER ;
+CALL Price_update(2);
+SELECT * FROM Library;
++-----+-------+--------+
+| Bid | Bname | Bprice |
++-----+-------+--------+
+| 2 | DBMS | 360 |
+| 3 | OOP | 200 |
+| 4 | ADS | 400 |
++-----+-------+--------+
+
+
+pracice
+
+CREATE DATABASE practice;
+USE Practice;
+CREATE TABLE Stud_Marks(name varchar(50),total_marks int(50),PRIMARY 
+KEY(name));
+CREATE TABLE Result(RollNo int(50),name varchar(50),Class varchar(50),PRIMARY 
+KEY(RollNo));
+SELECT * FROM Result;
++--------+-----------+--------+
+| RollNo | name | Class |
++--------+-----------+--------+
+| 1 | Samiksha | SYComp |
+| 2 | Vaishnavi | SYComp |
+| 3 | Deepti | SYComp |
+| 4 | Sharavi | SYIT |
+| 5 | Isha | SYIT |
+| 6 | Akanksha | SYECE |
+| 7 | Trupti | SYECE |
+| 8 | Sanika | SYECE |
++--------+-----------+--------+
+SELECT * FROM Stud_Marks;
++-----------+-------------+
+| name | total_marks |
++-----------+-------------+
+| Akanksha | 882 |
+| Deepti | 1000 |
+| Isha | 991 |
+| Samiksha | 992 |
+| Sanika | 850 |
+| Sharavi | 990 |
+| Trupti | 900 |
+| Vaishnavi | 996 |
++-----------+-------------+
+DELIMITER $$
+CREATE PROCEDURE proc_Grade(IN N varchar(50),OUT category varchar(50))
+BEGIN
+DECLARE S int(10);
+SELECT total_marks into S from Stud_Marks Where name=N;
+IF S<=1500 AND S>=990 THEN SET category="distinction";
+ELSEIF S<=989 AND S>=900 THEN SET category="First Class";
+ELSEIF S<=899 AND S>=825 THEN SET category="Second Class";
+ELSE SET category="Pass";
+END IF;
+END $$
+DELIMITER ;
+CALL proc_Grade('Samiksha',@category);
+SELECT @category;
++-------------+
+| @category |
++-------------+
+| distinction |
++-------------+

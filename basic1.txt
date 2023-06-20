@@ -1,0 +1,314 @@
+CREATE DATABASE UDBMS;
+USE UDBMS;
+CREATE TABLE Departments(Did int(50) primary key,Dname varchar(50) not null,Dhod 
+varchar(50) not null,Dloc varchar(50));
+CREATE TABLE Instructors(Iid int(50) primary key,Iname varchar(50) not 
+null,Icourse varchar(50) not null,Isal int(50),Dname varchar(50));
+CREATE TABLE Courses(Cid int(50) primary key,Cname varchar(50) not null,Cduration 
+varchar(50) not null,Cfee Float(8,2),Iname varchar(50));
+CREATE TABLE Students(Sid int(50) primary key,Sname varchar(50) not null,Dname 
+varchar(50) ,Cname varchar(50));
+INSERT INTO Departments VALUES(1,'Computer Engineering','Mr.Kshirsagar','Main 
+building');
+INSERT INTO Departments (Did,Dname,Dhod,Dloc) VALUES (2,'IT 
+Engineering','Ms.Jawale','Cooperate office');
+INSERT INTO Instructors 
+VALUES(100,'Mr.S.R.Deshmukh','D.B.M.S',85000,'Computer Engineering');
+INSERT INTO Instructors (Iid,Iname,Icourse,Isal,Dname) 
+VALUES(101,'Ms.B.Kotame','O.O.P',70000,'Computer Engineering');
+INSERT INTO Courses VALUES(1001,'A.D.S','45 Days',8000,'Mr.V.N.Nirgude');
+INSERT INTO Courses (Cid,Cname,Cduration,Cfee,Iname) VALUES(1002,'O.S.A','3 
+months',9500,'Mr.P.Kalwadekar');
+INSERT INTO Students VALUES(11,'Samiksha','Computer Engineering','O.S.A');
+INSERT INTO Students (Sid,Sname,Dname,Cname) VALUES (12,'Sharvi','IT 
+Engineering','S.E');
+SELECT * FROM Departments;
++-----+----------------------+---------------+------------------+
+| Did | Dname | Dhod | Dloc |
++-----+----------------------+---------------+------------------+
+| 1 | Computer Engineering | Mr.Kshirsagar | Main building |
+| 2 | IT Engineering | Ms.Jawale | Cooperate office |
++-----+----------------------+---------------+------------------+
+SELECT * FROM Instructors;
++-----+-----------------+---------+-------+----------------------+
+| Iid | Iname | Icourse | Isal | Dname |
++-----+-----------------+---------+-------+----------------------+
+| 100 | Mr.S.R.Deshmukh | D.B.M.S | 85000 | Computer Engineering |
+| 101 | Ms.B.Kotame | O.O.P | 70000 | Computer Engineering |
++-----+-----------------+---------+-------+----------------------+
+SELECT * FROM Courses;
++------+-------+-----------+---------+-----------------+
+| Cid | Cname | Cduration | Cfee | Iname |
++------+-------+-----------+---------+-----------------+
+| 1001 | A.D.S | 45 Days | 8000.00 | Mr.V.N.Nirgude |
+| 1002 | O.S.A | 3 months | 9500.00 | Mr.P.Kalwadekar |
++------+-------+-----------+---------+-----------------+
+SELECT * FROM Students;
++-----+----------+----------------------+-------+
+| Sid | Sname | Dname | Cname |
++-----+----------+----------------------+-------+
+| 11 | Samiksha | Computer Engineering | O.S.A |
+| 12 | Sharvi | IT Engineering | S.E |
++-----+----------+----------------------+-------+
+SELECT Dname FROM Departments;
++----------------------+
+| Dname |
++----------------------+
+| Computer Engineering |
+| IT Engineering |
++----------------------+
+SELECT Cname,Cduration FROM Courses;
++-------+-----------+
+| Cname | Cduration |
++-------+-----------+
+| A.D.S | 45 Days |
+| O.S.A | 3 months |
++-------+-----------+
+SELECT Sid,Sname FROM Students;
++-----+----------+
+| Sid | Sname |
++-----+----------+
+| 11 | Samiksha |
+| 12 | Sharvi |
++-----+----------+
+SELECT Dname FROM Departments WHERE Dhod='Ms.Jawale';
++----------------+
+| Dname |
++----------------+
+| IT Engineering |
++----------------+
+SELECT Sid,Sname FROM Students where Cname='S.E';
++-----+--------+
+| Sid | Sname |
++-----+--------+
+| 12 | Sharvi |
++-----+--------+
+SELECT Iid,Iname,Icourse,Isal FROM Instructors WHERE Dname='Computer 
+Engineering';
++-----+-----------------+---------+-------+
+| Iid | Iname | Icourse | Isal |
++-----+-----------------+---------+-------+
+| 100 | Mr.S.R.Deshmukh | D.B.M.S | 85000 |
+| 101 | Ms.B.Kotame | O.O.P | 70000 |
++-----+-----------------+---------+-------+
+SELECT Sid,Sname FROM Students WHERE Cname='O.S.A' AND Dname='Computer 
+Engineering';
++-----+----------+
+| Sid | Sname |
++-----+----------+
+| 11 | Samiksha |
++-----+----------+
+SELECT * FROM Courses WHERE Cname='A.D.S' OR Iname='Mr.V.N.Nirgude';
++------+-------+-----------+---------+----------------+
+| Cid | Cname | Cduration | Cfee | Iname |
++------+-------+-----------+---------+----------------+
+| 1001 | A.D.S | 45 Days | 8000.00 | Mr.V.N.Nirgude |
++------+-------+-----------+---------+----------------+
+SELECT * FROM Departments WHERE NOT Dname='Computer Engineering';
++-----+----------------+-----------+------------------+
+| Did | Dname | Dhod | Dloc |
++-----+----------------+-----------+------------------+
+| 2 | IT Engineering | Ms.Jawale | Cooperate office |
++-----+----------------+-----------+------------------+
+1 row in set (0.00 sec)
+SELECT * FROM Students ORDER BY Dname;
++-----+----------+----------------------+-------+
+| Sid | Sname | Dname | Cname |
++-----+----------+----------------------+-------+
+| 11 | Samiksha | Computer Engineering | O.S.A |
+| 12 | Sharvi | IT Engineering | S.E |
++-----+----------+----------------------+-------+
+SELECT * FROM Courses ORDER BY Cid DESC;
++------+-------+-----------+---------+-----------------+
+| Cid | Cname | Cduration | Cfee | Iname |
++------+-------+-----------+---------+-----------------+
+| 1002 | O.S.A | 3 months | 9500.00 | Mr.P.Kalwadekar |
+| 1001 | A.D.S | 45 Days | 8000.00 | Mr.V.N.Nirgude |
++------+-------+-----------+---------+-----------------+
+SELECT * FROM STUDENTS WHERE Sname IS NULL;
+Empty set
+SELECT * FROM Departments WHERE Dhod IS NOT NULL;
++-----+----------------------+---------------+------------------+
+| Did | Dname | Dhod | Dloc |
++-----+----------------------+---------------+------------------+
+| 1 | Computer Engineering | Mr.Kshirsagar | Main building |
+| 2 | IT Engineering | Ms.Jawale | Cooperate office |
++-----+----------------------+---------------+------------------+
+UPDATE STUDENTS SET Sname='Vaishnavi' WHERE Sid=11;
+SELECT * FROM Students;
++-----+-----------+----------------------+-------+
+| Sid | Sname | Dname | Cname |
++-----+-----------+----------------------+-------+
+| 11 | Vaishnavi | Computer Engineering | O.S.A |
+| 12 | Sharvi | IT Engineering | S.E |
++-----+-----------+----------------------+-------+
+UPDATE Courses SET Cfee=10000 WHERE Cname='A.D.S' AND 
+IName='Mr.V.N.Nirgude';
+SELECT * FROM Courses;
++------+-------+-----------+----------+-----------------+
+| Cid | Cname | Cduration | Cfee | Iname |
++------+-------+-----------+----------+-----------------+
+| 1001 | A.D.S | 45 Days | 10000.00 | Mr.V.N.Nirgude |
+| 1002 | O.S.A | 3 months | 9500.00 | Mr.P.Kalwadekar |
++------+-------+-----------+----------+-----------------+
+ALTER TABLE Departments ADD Dmembers int(15);
+DESC Departments;
++----------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| Did | int | NO | PRI | NULL | |
+| Dname | varchar(50) | NO | | NULL | |
+| Dhod | varchar(50) | NO | | NULL | |
+| Dloc | varchar(50) | YES | | NULL | |
+| Dmembers | int | YES | | NULL | |
++----------+-------------+------+-----+---------+-------+
+ALTER TABLE Students DROP Dname;
+DESC Students;
++-------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| Sid | int | NO | PRI | NULL | |
+| Sname | varchar(50) | NO | | NULL | |
+| Cname | varchar(50) | YES | | NULL | |
++-------+-------------+------+-----+---------+-------+
+ALTER TABLE Courses ADD cratings varchar(15);
+DESC Courses;
++-----------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Cid | int | NO | PRI | NULL | |
+| Cname | varchar(50) | NO | | NULL | |
+| Cduration | varchar(50) | NO | | NULL | |
+| Cfee | float(8,2) | YES | | NULL | |
+| Iname | varchar(50) | YES | | NULL | |
+| cratings | varchar(15) | YES | | NULL | |
++-----------+-------------+------+-----+---------+-------+
+ALTER TABLE Courses MODIFY Cratings int(50);
+DESC Courses;
++-----------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Cid | int | NO | PRI | NULL | |
+| Cname | varchar(50) | NO | | NULL | |
+| Cduration | varchar(50) | NO | | NULL | |
+| Cfee | float(8,2) | YES | | NULL | |
+| Iname | varchar(50) | YES | | NULL | |
+| Cratings | int | YES | | NULL | |
++-----------+-------------+------+-----+---------+-------+
+SELECT MIN(Cfee) FROM Courses;
++-----------+
+| MIN(Cfee) |
++-----------+
+| 9500.00 |
++-----------+
+SELECT MAX(Isal) FROM Instructors;
++-----------+
+| MAX(Isal) |
++-----------+
+| 85000 |
++-----------+
+SELECT COUNT(Isal) FROM Instructors WHERE Isal=70000;
++-------------+
+| COUNT(Isal) |
++-------------+
+| 1 |
++-------------+
+SELECT AVG(Isal) FROM Instructors;
++------------+
+| AVG(Isal) |
++------------+
+| 77500.0000 |
++------------+
+SELECT SUM(Cfee) FROM Courses;
++-----------+
+| SUM(Cfee) |
++-----------+
+| 19500.00 |
++-----------+
+SELECT * FROM Departments WHERE Dname LIKE 'I%';
++-----+----------------+-----------+------------------+----------+
+| Did | Dname | Dhod | Dloc | Dmembers |
++-----+----------------+-----------+------------------+----------+
+| 2 | IT Engineering | Ms.Jawale | Cooperate office | NULL |
++-----+----------------+-----------+------------------+----------+
+SELECT * FROM Courses WHERE Cname LIKE '%a';
++------+-------+-----------+---------+-----------------+----------+
+| Cid | Cname | Cduration | Cfee | Iname | Cratings |
++------+-------+-----------+---------+-----------------+----------+
+| 1002 | O.S.A | 3 months | 9500.00 | Mr.P.Kalwadekar | NULL |
++------+-------+-----------+---------+-----------------+----------+
+SELECT * FROM Students WHERE Sname LIKE '%a%';
++-----+-----------+-------+-------+
+| Sid | Sname | Cname | Dname |
++-----+-----------+-------+-------+
+| 11 | Vaishnavi | O.S.A | NULL |
+| 12 | Sharvi | S.E | NULL |
++-----+-----------+-------+-------+
+SELECT * FROM Students WHERE Sname LIKE 'v%i';
++-----+-----------+-------+-------+
+| Sid | Sname | Cname | Dname |
++-----+-----------+-------+-------+
+| 11 | Vaishnavi | O.S.A | NULL |
++-----+-----------+-------+-------+
+SELECT * FROM Students WHERE Sname NOT LIKE 'a%';
++-----+-----------+-------+-------+
+| Sid | Sname | Cname | Dname |
++-----+-----------+-------+-------+
+| 11 | Vaishnavi | O.S.A | NULL |
+| 12 | Sharvi | S.E | NULL |
++-----+-----------+-------+-------+
+SELECT * FROM STUDENTS WHERE Sname LIKE 'vai%';
++-----+-----------+-------+-------+
+| Sid | Sname | Cname | Dname |
++-----+-----------+-------+-------+
+| 11 | Vaishnavi | O.S.A | NULL |
++-----+-----------+-------+-------+
+SELECT * FROM Departments WHERE Dname LIKE '%ngi%';
++-----+----------------------+---------------+------------------+----------+
+| Did | Dname | Dhod | Dloc | Dmembers |
++-----+----------------------+---------------+------------------+----------+
+| 1 | Computer Engineering | Mr.Kshirsagar | Main building | NULL |
+| 2 | IT Engineering | Ms.Jawale | Cooperate office | NULL |
++-----+----------------------+---------------+------------------+----------+
+SELECT * FROM Instructors WHERE Iname LIKE '________mukh';
+Empty set
+SELECT * FROM Courses WHERE Cname LIKE 'D_MS';
+Empty set
+SELECT * FROM Instructors WHERE Dname IN ('Computer Engineering','IT 
+Engineering');
++-----+-----------------+---------+-------+----------------------+
+| Iid | Iname | Icourse | Isal | Dname |
++-----+-----------------+---------+-------+----------------------+
+| 100 | Mr.S.R.Deshmukh | D.B.M.S | 85000 | Computer Engineering |
+| 101 | Ms.B.Kotame | O.O.P | 70000 | Computer Engineering |
++-----+-----------------+---------+-------+----------------------+
+SELECT * FROM Instructors WHERE Dname NOT IN ('Computer Engineering');
+Empty set
+SELECT * FROM Instructors WHERE Isal BETWEEN 72000 AND 90000 AND Iid 
+NOT IN (101);
++-----+-----------------+---------+-------+----------------------+
+| Iid | Iname | Icourse | Isal | Dname |
++-----+-----------------+---------+-------+----------------------+
+| 100 | Mr.S.R.Deshmukh | D.B.M.S | 85000 | Computer Engineering |
++-----+-----------------+---------+-------+----------------------+
+SELECT * FROM Courses WHERE CFee BETWEEN 5000 AND 10000 ORDER BY Cfee;
++------+-------+-----------+----------+-----------------+----------+
+| Cid | Cname | Cduration | Cfee | Iname | Cratings |
++------+-------+-----------+----------+-----------------+----------+
+| 1002 | O.S.A | 3 months | 9500.00 | Mr.P.Kalwadekar | NULL |
+| 1001 | A.D.S | 45 Days | 10000.00 | Mr.V.N.Nirgude | NULL |
++------+-------+-----------+----------+-----------------+----------+
+SELECT Iid AS Tid,Iname AS Tname FROM Instructors;
++-----+-----------------+
+| Tid | Tname |
++-----+-----------------+
+| 100 | Mr.S.R.Deshmukh |
+| 101 | Ms.B.Kotame |
++-----+-----------------+
+SELECT Iid AS Tid,Iname AS 'Teachers Name' FROM Instructors;;
++-----+-----------------+
+| Tid | Teachers Name |
++-----+-----------------+
+| 100 | Mr.S.R.Deshmukh |
+| 101 | Ms.B.Kotame |
++-----+-----------------+

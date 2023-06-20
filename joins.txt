@@ -1,0 +1,88 @@
+MYSQL JOINS:
+A)INNER JOIN: 
+SELECT Purchase.Pno,Customers.Cname FROM Purchase INNER JOIN Customers ON 
+Purchase.Cid=Customers.Cid;
++-----+-------------+
+| Pno | Cname |
++-----+-------------+
+| 13 | Mr.Malhotra |
+| 11 | Mr.Sarokte |
+| 12 | Ms.Rathod |
++-----+-------------+
+SELECT Purchase.Pno,Products.Pname,Customers.Cname FROM ((Purchase INNER 
+JOIN Products ON Products.Pid=Purchase.Pid) INNER JOIN Customers ON 
+Customers.Cid=Purchase.Pid);
+Empty set
+B)LEFT JOIN:
+SELECT Customers.Cname,Purchase.Pno FROM Purchase LEFT JOIN Customers ON 
+Customers.Cid=Purchase.Cid ORDER BY Customers.Cname;
++-------------+-----+
+| Cname | Pno |
++-------------+-----+
+| Mr.Malhotra | 13 |
+| Mr.Sarokte | 11 |
+| Ms.Rathod | 12 |
++-------------+-----+
+C) RIGHT JOIN:
+SELECT Products.Pname,Purchase.Pno FROM Purchase RIGHT JOIN Products ON 
+Products.Pid=Purchase.Pid ORDER BY Products.Pname;
++--------------+------+
+| Pname | Pno |
++--------------+------+
+| Cake | NULL |
+| Cake | 11 |
+| cake | 12 |
+| Cheesecake | NULL |
+| Garlic Bread | 13 |
+| Pastry | NULL |
+| pastry | NULL |
++--------------+------+
+D)CROSS JOIN:
+SELECT Products.Pname,Customers.Cname FROM Customers CROSS JOIN Produ
+cts;
++--------------+-------------+
+| Pname | Cname |
++--------------+-------------+
+| Cake | Ms.Kulkarni |
+| Cake | Ms.Rathod |
+| Cake | Mr.Verma |
+| Cake | Mr.Sarokte |
+| Cake | Mr.Desai |
+| Cake | Mr.Malhotra |
+| Cake | Ms.Kulkarni |
+| Cake | Ms.Rathod |
+| Cake | Mr.Verma |
+| Cake | Mr.Sarokte |
+| Cake | Mr.Desai |
+| Cake | Mr.Malhotra |
+| cake | Ms.Kulkarni |
+| cake | Ms.Rathod |
+| cake | Mr.Verma |
+| cake | Mr.Sarokte |
+| cake | Mr.Desai |
+| cake | Mr.Malhotra |
+| Pastry | Ms.Kulkarni |
+| Pastry | Ms.Rathod |
+| Pastry | Mr.Verma |
+| Pastry | Mr.Sarokte |
+| Pastry | Mr.Desai |
+| Pastry | Mr.Malhotra |
+| pastry | Ms.Kulkarni |
+| pastry | Ms.Rathod |
+| pastry | Mr.Verma |
+| pastry | Mr.Sarokte |
+| pastry | Mr.Desai |
+| pastry | Mr.Malhotra |
+| Cheesecake | Ms.Kulkarni |
+| Cheesecake | Ms.Rathod |
+| Cheesecake | Mr.Verma |
+| Cheesecake | Mr.Sarokte |
+| Cheesecake | Mr.Desai |
+| Cheesecake | Mr.Malhotra |
+| Garlic Bread | Ms.Kulkarni |
+| Garlic Bread | Ms.Rathod |
+| Garlic Bread | Mr.Verma |
+| Garlic Bread | Mr.Sarokte |
+| Garlic Bread | Mr.Desai |
+| Garlic Bread | Mr.Malhotra |
++--------------+-------------+
